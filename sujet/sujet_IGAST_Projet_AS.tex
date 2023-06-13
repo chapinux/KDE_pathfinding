@@ -1,0 +1,167 @@
+\documentclass[10pt,a4paper,french]{article}
+\usepackage{graphicx} % Required for including pictures
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{IGN_green}{rgb}{0.549,0.741,0.227}
+\definecolor{IGN_green_dark}{rgb}{0.273,0.368,0.113}
+\newcommand{\LASTIG}{\href{https://www.umr-lastig.fr/}{\bf LASTIG}}
+\newcommand{\ENSG}{\href{https://www.ensg.eu/}{\bf ENSG}}
+\newcommand{\IGN}{\href{https://ign.fr/}{\bf IGN}}
+\newcommand{\UnivGustaveEiffel}{\href{https://www.univ-gustave-eiffel.fr/}{\bf Université Gustave Eiffel}}
+\newcommand{\ACTE}{\href{https://www.umr-lastig.fr/acte/}{ACTE}}
+\newcommand{\GEOVIS}{\href{https://www.umr-lastig.fr/geovis/}{GEOVIS}}
+\newcommand{\MEIG}{\href{https://www.umr-lastig.fr/meig/}{MEIG}}
+\newcommand{\STRUDEL}{\href{https://www.umr-lastig.fr/strudel/}{STRUDEL}}
+\usepackage{geometry}
+\geometry{left=20mm,right=20mm,bindingoffset=0mm,top=20mm,bottom=20mm}
+\usepackage{titlesec}
+\titleformat*{\section}{\center\Large\bfseries\color{IGN_green_dark}}
+\usepackage{multirow}
+\usepackage{hyperref}
+\hypersetup{
+    unicode=false,             % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,           % show Acrobat’s toolbar?
+    pdfmenubar=true,           % show Acrobat’s menu?
+    pdffitwindow=false,        % window fit to page when opened
+    pdfstartview={FitH},       % fits the width of the page to the window
+    pdftitle={SUjet Projet AS IGAST: KDE \& pathfinding }, % title
+    pdfnewwindow=true,         % links in new PDF window
+    colorlinks=true,           % false: boxed links; true: colored links
+    linkcolor=red,             % color of internal links (change box color with linkbordercolor)
+    citecolor=green,           % color of links to bibliography
+    filecolor=magenta,         % color of file links
+    urlcolor=IGN_green_dark         % color of external links
+}
+\begin{document}
+\includegraphics[height=0.8cm,trim={20 20 20 20},clip]{logo_lastig.png}
+\hfill
+\includegraphics[height=0.8cm,trim={10 10 10 10},clip]{logo_IGN-ENSG.png}
+\hfill
+\includegraphics[height=0.8cm]{logo_UGE.png}
+
+\vspace{0.5em}
+
+\begin{center}
+\uppercase{\Large FICHE DE POSTE}
+\end{center}
+
+\hrule
+\begin{center}
+\bf \uppercase{Ingénieur\textperiodcentered e Infrastructure}
+\end{center}
+\hrule
+\begin{center}
+\begin{tabular}{l|l}
+     {\bf Intitulé du poste} & Ingénieur\textperiodcentered e de recherche (ou d’études pour la recherche)\\
+     &\\
+     {\bf Site / Lieu de travail} & LASTIG - 73 avenue de Paris - 94160 - Saint-Mandé\\
+    % {\bf Type de contrat} & XXX\\
+    % {\bf Salaire } & YYY\\
+%     {\bf Date de recrutement} & 1 septembre 2022\\
+     {\bf Niveau d’étude requis} & Diplôme d'ingénieur ou doctorat en informatique\\
+\end{tabular}
+\end{center}
+
+% \section*{Contexte}
+
+% L’\ENSG, chargée de la politique de recherche et d’enseignement de l'\IGN, regroupe les services de l’école, proprement dite, sur le campus de l’\UnivGustaveEiffel~et les équipes de recherche en sciences de l’information géographique, majoritairement implantées à Saint-Mandé et regroupées sous l’autorité fonctionnelle du \LASTIG.
+% Le centre de compétences \emph{Technologies des Systèmes d’Information} (CC TSI) regroupe une dizaine d’agents et comprend un pôle d’enseignement qui regroupe les personnels enseignants et enseignants-chercheurs et dont le responsable est localisé à Champs-sur-Marne.
+% Le CC TSI participe aux programmes de formation, de recherche, aux missions d'expertise, à la valorisation de la recherche (avec le Service de l’innovation) et à la gestion des équipements ou plateformes qui soutiennent les activités de recherche ou d’enseignement.
+
+% \smallskip
+% L’Unité Mixte de Recherche (UMR) \LASTIG, sous la tutelle de l’\IGN~et de l’\UnivGustaveEiffel, mène des recherches variées en sciences de l’information géographique pour la ville durable et les territoires numériques. Il comporte plus de 60 membres, permanents et contractuels. Le \LASTIG~est confronté à des problématiques de recherche fondamentale et opérationnelle sur les sujets suivants :
+% \begin{itemize}
+% \item l’acquisition et le traitement de données massives et multimodales (équipe \ACTE) ;
+% \item la géovisualisation, l’interaction et l’immersion (équipe \GEOVIS) ;
+% \item la médiation et l'enrichissement de données géographiques (équipe \MEIG) ;
+% \item l’analyse de la dynamique spatio-temporelle des territoires (équipe \STRUDEL).
+% \end{itemize}
+
+\section*{Missions}
+
+Le \LASTIG~a de nombreux besoins en terme d'infrastructures de recherche et souhaite se doter d'un·e ingénieur·e spécialisé·e dans la mise en place et la maintenance d'infrastructures partagées de recherche (service et données).
+Cet·te Ingénieur·e pourra, par ailleurs, appuyer la politique de gestion des données de la recherche du laboratoire.
+\textcolor{cyan}{\bf{Une demande de création d'un poste similaire plus spécifiquement orienté sur le calcul a été initiée, avec pour objectif de couvrir l'ensemble des besoins du \LASTIG~grâce à ce binôme. }}
+
+\medskip
+Les missions principales de la personne recrutée seront de~:
+
+\begin{itemize}
+    \item Faire l'\textbf{inventaire des infrastructures de service et de données} utilisées et/ou développées par des chercheur-e-s du \LASTIG.
+    \item Proposer un \textbf{état de l'art} de telles infrastructures (nationales et internationales) pertinentes pour le laboratoire.
+    \item Contribuer à la politique de \textbf{mise en \oe uvre} des infrastructures partagées du LASTIG \textcolor{cyan}{\bf{notamment avec les constituants de l'UGE}}.
+    \item Faire l'\textbf{inventaire des données de recherche ouvertes} du laboratoire.
+    \item Aider dans la mise en place de \textbf{plan de gestion des données}, \textcolor{cyan}{\bf{notamment dans le cadres de projets de recherche portés par le laboratoire}}.
+    \item Participer à la \textbf{capitalisation sur les travaux et le code produits} lors de projets, thèses, stages après la fin de ceux-ci ou lors de leur dernière phase, et en lien avec les missions du poste.
+    \item Participer à la \textbf{valorisation des activités de recherche} (y compris publications).
+    \item Développer des \textbf{prototypes} et participer aux activités d’\textbf{innovation} de l’IGN utilisant les recherches du \LASTIG.
+    \item Contribuer à la \textbf{communauté d’experts Infrastructure} (notamment au centre de compétences en informatique).
+    \item Participer aux enseignements à l’ENSG.
+\end{itemize}
+
+% \medskip
+% En particulier, deux projets transverses au \LASTIG~...~:
+
+% \begin{enumerate}
+%     \item Le premier projet a comme objectif ...
+%     \item Le deuxième projet a comme objectif ... 
+% \end{enumerate}
+
+%L’accueil et l’encadrement fonctionnel se feront au LASTIG, à Saint-Mandé.
+
+%\newpage
+% \section*{Profil recherché}
+% \subsection*{Compétences techniques}
+% \begin{itemize}
+%     \item Maîtriser des \emph{environnements et langages de programmation} (Python, Java, JavaScript, C++, etc.)
+%     \item Avoir des notions en \emph{architecture de données massives} (Hadoop, etc.)
+%     \item Maîtriser les \emph{outils DevOps} (intégration continue, etc.) et de \emph{développement Agile}
+%     \item Maîtriser des \emph{outils libres en géomatique} (PostGreSQL/ PostGIS, QGIS, GDAL, etc.)
+%     \item Savoir expertiser et assurer la \emph{qualité scientifique de résultats} 
+%     \item Pratiquer un \emph{anglais technique et/ou scientifique}
+%     \item Savoir \emph{rédiger des articles scientifiques}
+% \end{itemize}
+
+% \subsection*{Compétences organisationnelles}
+% \begin{itemize}
+%     \item Savoir \emph{transmettre} un savoir, une technique, une compétence
+%     \item Savoir \emph{concevoir et mettre en \oe uvre} des solutions nouvelles et efficaces 
+%     \item Savoir \emph{publier et diffuser} de l’information dans un système informatisé 
+%     \item Savoir \emph{mener une veille} sur son domaine d’activité 
+%     \item Avoir le \emph{sens de la responsabilité, de l’autonomie, de l’initiative}
+% \end{itemize}
+
+% \subsection*{Compétences relationnelles}
+% \begin{itemize}
+%     \item Savoir \emph{collaborer et travailler en équipe}
+%     \item Savoir \emph{encourager la synergie et partager ses connaissances et ses expériences}
+% \end{itemize}
+
+% %\subsection*{Expérience professionnelle souhaitée ?}
+
+% \section*{Conditions particulières d’exercice du poste}
+% Possibilité de déplacements en conférences scientifiques pour la diffusion de recherches, possibilité de travail multi-sites à Champs-sur-Marne.
+%\begin{itemize}
+%    \item \makebox[4.5cm]{\bf Lieu de travail\hfill} IGN, LaSTIG – 73 avenue de Paris - 94160 - Saint-Mandé, proximité Métro (Saint-Mandé - ligne 1) et RER (Vincennes - ligne A)
+%    \item \makebox[4.5cm]{\bf Type de contrat\hfill} ?
+%    \item \makebox[4.5cm]{\bf Date de prise de poste\hfill} ?
+%    \item \makebox[4.5cm]{\bf Rémunération\hfill} ? selon diplôme et expérience
+%\end{itemize}
+
+% \section*{Contacts}
+% Merci d’adresser votre candidature (lettre de motivation + CV en un seul PDF) en précisant impérativement la référence~\textbf{LASTIG\_LIDAR\_HD} à l'ensemble des adresses suivantes~:
+% \begin{center}
+% \begin{tabular}{ll}
+%     {\bf Ana-Maria Raimond}&\multirow{2}{*}{ana-maria(point)raimond(at)ign(point)fr}\\
+%     {\small (co-directrice du \LASTIG, équipe \MEIG)}&\\
+%     {\bf Julien Perret}&\multirow{2}{*}{julien(point)perret(at)ign(point)fr}\\
+%     {\small (\LASTIG, responsable de l'équipe \STRUDEL)}&\\
+%     {\bf Laurent Breton}&\multirow{2}{*}{laurent(point)breton(at)ensg(point)eu}\\
+%     {\small (\ENSG, responsable du CC TSI)}&
+% \end{tabular}
+% \end{center}
+%\section*{Liens}
+%\href{https://www.umr-lastig.fr/}{Site web du laboratoire LASTIG}
+\end{document}
