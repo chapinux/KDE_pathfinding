@@ -1,0 +1,285 @@
+%\pdfminorversion=4
+\documentclass[9pt]{beamer}
+\input{IGNbeamerThese}
+
+
+\title{Estimation de la densité dans l'espace urbain piéton}
+
+\subtitle{M2-IGAST / Projet d'Analyse Spatiale}
+\date{}
+
+\author{Paul Chapron}
+\institute[]{
+Univ. Gustave Eiffel, LASTIG, IGN-ENSG, Saint-Mandé, France.  \\
+}
+\date{\today}
+
+\usepackage[french]{babel}
+\usepackage{datetime}  
+\usepackage[T1]{fontenc}
+
+\usepackage{hyperref}
+\hypersetup{
+    unicode=false,             % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,           % show Acrobat’s toolbar?
+    pdfmenubar=true,           % show Acrobat’s menu?
+    pdffitwindow=false,        % window fit to page when opened
+    pdfstartview={FitH},       % fits the width of the page to the window
+    pdftitle={Sujet Projet AS IGAST: KDE \& pathfinding }, % title
+    pdfnewwindow=true,         % links in new PDF window
+    colorlinks=true,           % false: boxed links; true: colored links
+    linkcolor=IGNVert,             % color of internal links (change box color with linkbordercolor)
+    citecolor=green,           % color of links to bibliography
+    filecolor=magenta,         % color of file links
+    urlcolor=teal   % color of external links
+}
+
+
+% Backup frames
+%\setcounter{framenumber}{38}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FRAME DE COUVERTURE
+% MODELE 1
+
+\begin{frame}[plain,c]
+\begin{columns}
+\begin{column}{8cm}
+\begin{center}
+\vspace{2cm}
+\titlepage
+\end{center}
+\end{column}
+\begin{column}{1cm}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEBUT DE LA PRESENTATION
+% BACKGROUND POUR AVOIR LE HAUT DE PAGE QUI VA BIEN
+\usebackgroundtemplate{
+    \begin{tikzpicture}[scale=0.503]
+    \filldraw[color=IGNGris] (0,0) rectangle(2.62,0.54);
+    \filldraw[color=IGNGris] (4.77,0) rectangle(2.62+4.77,0.54);
+    
+    \filldraw[color=IGNVert] (9.50+0.27,0) -- (9.50,0.54)-- (9.50+7.41-0.27,0.54)-- (9.50+7.41,0)--cycle;
+    
+    \filldraw[color=IGNGris] (19.50,0) rectangle(2.62+19.50,0.54);
+    \filldraw[color=IGNGris] (23.11,0.54)--(23.11+0.54,0)--(2.3+23.11,0)--(2.3+23.11,0.54)--cycle;;
+    \end{tikzpicture}   
+}
+\setbeamercolor{alerted text}{fg=IGNVert}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PLAN
+\setbeamercolor{section in sidebar}{fg=white } %LIGNE NECESSAIRE POUR EFFACER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+\setbeamercolor{subsection in sidebar}{fg=white }%LIGNE NECESSAIRE POUR EFFACER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+\setbeamercolor{section in sidebar shaded}{fg=white }%LIGNE NECESSAIRE POUR EFFACER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+\setbeamercolor{subsection in sidebar shaded}{fg=white }%LIGNE NECESSAIRE POUR EFFACER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+%\begin{frame}
+  %\begin{columns}[T]
+  %\begin{column}{5cm}
+  %\tableofcontents[sections={1-2}, hideallsubsections]
+  %\end{column}
+  %\begin{column}{5cm}
+  %\tableofcontents[sections={3-4}, hideallsubsections]
+  %\end{column}
+  %\end{columns}
+%\end{frame}
+\setbeamercolor{section in sidebar}{fg=IGNGris}%LIGNE NECESSAIRE POUR AFFICHER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+\setbeamercolor{subsection in sidebar}{fg=IGNGris}%LIGNE NECESSAIRE POUR AFFICHER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+\setbeamercolor{section in sidebar shaded}{fg=IGNVert}%LIGNE NECESSAIRE POUR AFFICHER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+\setbeamercolor{subsection in sidebar shaded}{fg=IGNVert}%LIGNE NECESSAIRE POUR AFFICHER LE PLAN DE LA SIDEBAR (PAS MIEUX)
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PRESENTATION BEAMER CLASSIQUE
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Organisation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{frame}{L'estimation de densité 2D}
+
+Kernel Density Estimate (KDE): méthode statistique qui estime la densité de probabilité d'une variable aléatoire \alert{en tout point du support } à l'aide d'un \textit{noyau} (souvent gaussien)\\
+\begin{center}
+\includegraphics[height=0.3\textwidth]{ressources/images/KDE_raster.png} 
+\end{center}
+
+
+Notion de \alert{distance} :  noyau gaussien $\rightarrow$ contribution d'une observation fonction inverse de sa distance  \\
+
+
+\vspace{0.5cm}
+
+
+
+\begin{scriptsize}
+2 caractéristiques à noter  
+
+\begin{itemize} 
+  \item Le calcul peut être fait en tout point 
+  \item La distance "classique" est euclidienne
+\end{itemize}
+
+
+
+
+\end{scriptsize}
+\end{frame}
+
+
+
+
+\begin{frame}{Problématique: Densité(s) dans l'espace piéton urbain }
+
+Hypothèse : la densité de \alert{piétons} en centre ville se modélise comme une combinaison de densité de \alert{points d'intérêts} (POI)\\
+\begin{scriptsize}
+  e.g. boutiques, cinémas, arrêts TPC, restauration, musées, lieux de culte, etc.
+\end{scriptsize}
+\vspace{0.5cm}
+
+Constats : 
+\begin{itemize}
+  \item inutile de calculer une densité là où on ne peut pas marcher 
+  \item la distance euclidienne n'est pas adaptée à la marche en centre ville
+\end{itemize}
+\vspace{0.5cm}
+
+Objectif : Calculer une densité 2D \alert{plausible} pour un piéton i.e.
+
+\begin{itemize}
+  \item uniquement dans les zones «marchables» $\rightarrow$ \alert{à construire}
+  \item avec une distance «à pied» $\rightarrow$  \alert{pathfinding}
+\end{itemize}
+\vspace{0.5cm}
+pour différentes couches de points d'intérêt
+\end{frame}
+
+
+\begin{frame}{Zone «marchable» à Nantes}
+\begin{center}
+\includegraphics[width=\textwidth]{ressources/images/zone_marchable.png} 
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}{Outils libres et données ouvertes}
+
+
+\textbf{Données :} Jeu de données de test fourni, extension avec extraction d'OSM et/ou IGN \\ 
+
+\vspace{0.5cm}
+
+ \textbf{Outils :} R (obligatoire), IDE, librairies recommandées :
+
+
+
+\begin{center}
+\includegraphics[height=0.1\textwidth]{ressources/images/rlogo.jpg} 
+\includegraphics[height=0.1\textwidth]{ressources/images/rstudio.png}  
+\includegraphics[height=0.1\textwidth]{ressources/images/sf_logo.png} 
+\includegraphics[height=0.1\textwidth]{ressources/images/logo_osmdata.png} 
+\end{center}
+
+\vspace{0.9cm}
+
+\begin{scriptsize}
+\begin{itemize}
+\item R \url{https://cran.rstudio.com/}
+\item Rstudio \url{https://posit.co/download/rstudio-desktop/}
+\item package sf \url{https://r-spatial.github.io/sf/}
+\item tuto R  + sf en français \url{https://hackmd.io/@hOaFaD2DS4WcOzNXU6j7vg/HJThOyWvU}
+\item librairie R d'import OSM  \url{https://github.com/ropensci/osmdata}
+\end{itemize}
+\end{scriptsize}
+
+\end{frame}
+
+%
+%
+
+\begin{frame}{Livrables attendus }
+
+\begin{itemize}
+\item Code versionné sur \url{https://github.com/chapinux/KDE_pathfinding}
+\item Documentation succincte
+\item Rapport
+\item Diaporama de soutenance
+\end{itemize}
+
+
+
+\end{frame}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Révision raster sources de données et résolutions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% BIBLIOGRAPHIE ET FIN
+
+%\begin{frame}{Bibliographie}
+%\begin{figure}[!h]
+%\begin{center}
+% \begin{tabular}{cccc}
+%   \toprule
+%   \includegraphics[height=7cm]{images/bookmassonnet}   & \includegraphics[height=7cm]{images/bookmaitreRSO} \\
+%     \bottomrule
+% \end{tabular}\\
+%\cite{massonnet2008}, \cite{maitre2001}
+%\end{center}
+%\end{figure}
+%\end{frame}
+
+
+
+
+% DEBUT DE LA PRESENTATION
+% BACKGROUND POUR AVOIR LE HAUT DE PAGE QUI VA BIEN
+\usebackgroundtemplate{
+    \begin{tikzpicture}[scale=0.503]
+    \filldraw[color=IGNGris] (0,0) rectangle(2.62,0.54);
+    \filldraw[color=IGNGris] (4.77,0) rectangle(2.62+4.77,0.54);
+    
+    \filldraw[color=IGNVert] (9.50+0.27,0) -- (9.50,0.54)-- (9.50+7.41-0.27,0.54)-- (9.50+7.41,0)--cycle;
+    
+    \filldraw[color=IGNGris] (19.50,0) rectangle(2.62+19.50,0.54);
+    \filldraw[color=IGNGris] (23.11,0.54)--(23.11+0.54,0)--(2.3+23.11,0)--(2.3+23.11,0.54)--cycle;;
+    \end{tikzpicture}   
+}
+
+%\begin{frame}[allowframebreaks]{Bibliographie}
+%\nocite{} 
+%\bibliographystyle{apalike} 
+%\bibliography{ressources/biblio/biblio-cours} % .bib file
+% \end{frame}  
+
+\end{document}
+
