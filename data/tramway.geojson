@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "tramway",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2154" } },
+"features": [
+{ "type": "Feature", "properties": { "PK": 3410.0, "CODE": 5603.0, "FCLASS": "tram_stop", "NAME": "Duchesse Anne - Château", "type": "arrêt de tram" }, "geometry": { "type": "Point", "coordinates": [ 356038.540788141603116, 6689459.02093140501529, 0.0 ] } },
+{ "type": "Feature", "properties": { "PK": 109.0, "CODE": 5603.0, "FCLASS": "tram_stop", "NAME": "Duchesse Anne - Château", "type": "arrêt de tram" }, "geometry": { "type": "Point", "coordinates": [ 356039.917434432718437, 6689456.338028906844556, 0.0 ] } },
+{ "type": "Feature", "properties": { "PK": 3309.0, "CODE": 5603.0, "FCLASS": "tram_stop", "NAME": "Commerce", "type": "arrêt de tram" }, "geometry": { "type": "Point", "coordinates": [ 355376.326559678360354, 6689316.800825803540647, 0.0 ] } },
+{ "type": "Feature", "properties": { "PK": 55.0, "CODE": 5603.0, "FCLASS": "tram_stop", "NAME": "Commerce", "type": "arrêt de tram" }, "geometry": { "type": "Point", "coordinates": [ 355388.503811006841715, 6689286.123250181786716, 0.0 ] } },
+{ "type": "Feature", "properties": { "PK": 3404.0, "CODE": 5603.0, "FCLASS": "tram_stop", "NAME": "Bouffay", "type": "arrêt de tram" }, "geometry": { "type": "Point", "coordinates": [ 355647.211382296518423, 6689295.630463968031108, 0.0 ] } },
+{ "type": "Feature", "properties": { "PK": 87.0, "CODE": 5603.0, "FCLASS": "tram_stop", "NAME": "Bouffay", "type": "arrêt de tram" }, "geometry": { "type": "Point", "coordinates": [ 355648.054014344408643, 6689292.3663424924016, 0.0 ] } }
+]
+}
