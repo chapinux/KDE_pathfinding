@@ -43,24 +43,27 @@ st_crs(buildings) <-  2154
 
 
 # affichage simple des géométries (sf)
-plot(zonepieton$geometry, border="grey30")
+plot(zonepieton$geometry, border="grey80")
+plot(buildings$geometry, add=T, col="grey50", lwd=0.7)
 plot(boutiques$geometry, add=T, col="orange", pch=18, cex=0.9)
-plot(tramway$geometry, add=T, col="blue", pch=18, cex=0.9)
-plot(restaurants$geometry, add=T, col="darkcyan", pch=18, cex=0.9)
+plot(tramway$geometry, add=T, col="blue", pch=18, cex=0.7)
+plot(restaurants$geometry, add=T, col="darkcyan", pch=18, cex=0.7)
 
 
 
 
 
-# on met tous les points d'interêt dans un seul dataframe
-
+# on met tous les points d'intérêt dans un seul dataframe
 # on vérifie que les PK (ID) sont bien uniques 
 all_IDs <-  c(tramway$PK, restaurants$PK, boutiques$PK)
 length(unique(all_IDs))== length(all_IDs)
 
-# on concatène les trois couches , il faut que le nombre de colonnes corresponde 
-# tramway a une colonne de plus restaurants et boutiques, on la retire 
-tramway <-  tramway %>%  dplyr::select(-OSM_ID)
+# on concatène les trois couches , il faut que le nombre et les noms de colonnes corresponde 
+names(restaurants) %in% names(boutiques) %>%  all
+names(restaurants) %in% names(tramway) %>% all
+length(names(restaurants)) == length (names(tramway))
+length(names(boutiques)) == length (names(tramway))
+
 
 # concaténation des trois couches en une seule 
 POI <- rbind(restaurants,boutiques,tramway)
@@ -71,13 +74,15 @@ POI <- rbind(restaurants,boutiques,tramway)
 # couleurs au hasard
 
 
-map1 <- ggplot(zonepieton)+
-  geom_sf(fill="slategray1", color="grey80", lwd=0.2)+
+map1 <- ggplot()+
+  geom_sf(data=zonepieton, aes(fill= type), color="grey80", lwd=0.2)+
+  geom_sf(data=buildings, aes(fill= type), color="grey50", lwd=0.2 )+
   geom_sf(data=POI, aes(color= type, shape=type) )+
-  scale_color_manual(values=c("black", "orange", "#e2a2d2"))+
+  scale_fill_manual(values = c("slategray1","palegreen" ))+
+  scale_color_manual(values=c("black", "orange", "orchid3"))+
   labs(color="Points d'intérêt \n (POI)",
        shape="Points d'intérêt \n (POI)",
-       fill="Zone marchable")+
+       fill="Occupation du sol")+
   theme_void()
 map1
 
