@@ -1,14 +1,11 @@
-
-# chargement des packages utiles 
+#chargement des packages utiles
 library(sf) # manip données spatiales
 library(ggplot2) # graphiques
 library(dplyr) #manipulation de dataframe 
 library(geojsonR) # entrée/sortie avec format geojson
 library(leaflet) #carto web 
 library(raster) #raster
-library(rgdal) #calcul raster
-library(stars) #manip données spatiotemporelles  
-library(MASS)
+library(MASS) # idem 
 
 
 
@@ -18,10 +15,10 @@ setwd("~/encadrement/PIR_2024_2025/KDE_pathfinding/")
 
 
 #chargement des données 
-boutiques <- st_read("./data/BOUTIQUES.shp")
-restaurants <- st_read("./data/RESTAURANTS.shp")
-tramway <- st_read("./data/TRAMWAY.shp")
-zonepieton <- st_read("./data/ZPB_EXPLODE2.shp")
+boutiques <- st_read("./data/boutiques.geojson")
+restaurants <- st_read("./data/restos.geojson")
+tramway <- st_read("./data/tramway.geojson")
+zonepieton <- st_read("./data/zonepieton.geojson")
 buildings <-  st_read("./data/BUILDINGS_NS.geojson")
 
 
@@ -44,7 +41,7 @@ st_crs(buildings) <-  2154
 
 # affichage simple des géométries (sf)
 plot(zonepieton$geometry, border="grey80")
-plot(buildings$geometry, add=T, col="grey50", lwd=0.7)
+plot(buildings$geometry, add=T, col="grey70", lwd=0.7)
 plot(boutiques$geometry, add=T, col="orange", pch=18, cex=0.9)
 plot(tramway$geometry, add=T, col="blue", pch=18, cex=0.7)
 plot(restaurants$geometry, add=T, col="darkcyan", pch=18, cex=0.7)
@@ -94,24 +91,35 @@ map1
 POI84 <- st_transform(POI,4326)
 zonepieton84 <- st_transform(zonepieton,4326)
 
-POI$lat <-  st_coordinates(POI84) %>% pull(Y)
-POI$long <-  st_coordinates(POI84) %>% pull(X)
+POI$lat <-  sf::st_coordinates(POI84)[,"Y"]
+POI$long <-  sf::st_coordinates(POI84)[,"X"]
 
-map2 <-  leaflet(zonepieton84) %>% 
+
+# legende de couleur , discrete
+POICol <- colorFactor(palette = 'RdYlGn', POI$type)
+
+
+map2 <-  leaflet() %>% 
   addTiles() %>%
-  addPolygons(weight=2) %>% 
-  addMarkers(data=POI84, )
+  addPolygons(data=zonepieton84,weight=2) %>% 
+  addCircleMarkers(data=POI84,color =~POICol(type ) ,radius=0.5, opacity=100) %>% 
+  addLegend('bottomright', pal = POICol, values = POI$type,
+            title = 'Point of Interest',opacity = 100)
+map2
 
 
 
 
-class(POI84)
+# creation de la grille 
 
 
 
 
 
 
+
+
+# code pour plus tard 
 # fonction qui calcule le KDE de base (fonction kde2D du package MASS)
 
 st_kde <- function(points,cellsize, bandwith, extent = NULL){
