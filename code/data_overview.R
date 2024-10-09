@@ -110,7 +110,40 @@ map2
 
 
 
+# on vérifie visuellement que la zone est connexe 
+plot(zonepieton["EXPLOD_ID"])
+#elle ne l'est pas , on va virer les petites zones non connectées à la grande 
+
+
+#on détermine quelle est la plus grande géométrie 
+index_surf_max <- which.max(st_area(zonepieton$geometry))
+#on remplace la zone par la plus grande composante connexe 
+zonepieton <- zonepieton %>% slice(index_surf_max)
+
+
+
+
+
 # creation de la grille 
+grid_10mx10m <- st_make_grid(zonepieton, cellsize = 10)
+plot(grid_10mx10m)
+
+grid_pieton <-  st_intersection(zonepieton,grid_10mx10m)
+plot(grid_pieton$geometry)
+
+
+#centroides des mailles, ça peut servir 
+centro <-  st_centroid(grid_pieton)
+plot(centro$geometry, cex=0.2, color="royalblue", lwd=0, pch=18 )
+
+
+
+
+
+
+
+
+
 
 
 
