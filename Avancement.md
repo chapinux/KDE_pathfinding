@@ -69,6 +69,7 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 - Dijkstra fonctionne bien avec les coûts uniformes (toutes les arêtes ont un coût de 1), mais on peut optimiser plus l'algorithme : 
 - 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
 - 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
+<<<<<<< HEAD
 
 ### L'algorithme en pseudo code : 
 - Variables
@@ -94,7 +95,17 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entre s et t)
    
 Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
+=======
+>>>>>>> 9d4dc769c64d80c82d9a48205463d842b428e524
 
+### Etapes de l'algorithme : 
+![Un Graphe pondéré](diaporama/ressources/images/graphe.png)
+Théoriquement pour mieux comprendre l'algorithme et arriver au bon résultat on représente notre graphe dans une tableau qui contient les noeuds du graphes et les distances pour arriver à chacun de ces noeuds.
+
+1.Initialisation : 
+
+2.
+3.
 ### 2. A* :
 ### 3. JPS : 
 ### 4. A* bidirectionnel : 
