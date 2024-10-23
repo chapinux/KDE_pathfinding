@@ -72,21 +72,21 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 <<<<<<< HEAD
 
 ### L'algorithme en pseudo code : 
-- Variables
--- G : graphe représenté par une matrice d’adjacence ou une liste d’adjacence
--- s : sommet source
--- t : sommet de destination
--- d : tableau des distances minimales entre s et chaque sommet v du graphe
--- π : tableau des prédecesseurs (chemin le plus court) entre s et chaque sommet v du graphe
--- Q : file à priorités (tas) contenant les sommets non visités, triée par distance minimale
-- Algorithme
+* Variables
+ G : graphe représenté par une matrice d’adjacence ou une liste d’adjacence
+ s : sommet source
+ t : sommet de destination
+ d : tableau des distances minimales entre s et chaque sommet v du graphe
+ π : tableau des prédecesseurs (chemin le plus court) entre s et chaque sommet v du graphe
+ Q : file à priorités (tas) contenant les sommets non visités, triée par distance minimale
+* Algorithme
 1. Initialisation :
--- d[s] = 0 (distance minimale entre s et lui-même est 0)
--- π[s] = s (prédecesseur de s est s lui-même)
--- Q = {s} (ajoute s à la file à priorités)
--- Tant que Q n’est pas vide :
--- u = ExtractMin(Q) (extraire le sommet avec la distance minimale la plus faible de la file à priorités)
-- Pour chaque voisin v de u :
+ d[s] = 0 (distance minimale entre s et lui-même est 0)
+ π[s] = s (prédecesseur de s est s lui-même)
+ Q = {s} (ajoute s à la file à priorités)
+ Tant que Q n’est pas vide :
+ u = ExtractMin(Q) (extraire le sommet avec la distance minimale la plus faible de la file à priorités)
+ Pour chaque voisin v de u :
    dist = d[u] + weight(u, v) (calculer la distance entre u et v en ajoutant le poids de l’arête)
     Si dist < d[v] :
    d[v] = dist (mise à jour de la distance minimale entre s et v)
@@ -96,7 +96,6 @@ Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entr
    
 Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
 =======
->>>>>>> 9d4dc769c64d80c82d9a48205463d842b428e524
 
 ### Etapes de l'algorithme : 
 ![Un Graphe pondéré](diaporama/ressources/images/graphe.png)
