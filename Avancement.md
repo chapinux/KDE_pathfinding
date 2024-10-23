@@ -21,6 +21,7 @@
 - *Johnson’s Algorithm*
 - *Bi-directional A-Star*
 - *Jump Point Search (JPS)*
+Cette liste n'est pas exhaustive , mais ce sont les algorithmes de pathifinding les plus efficaces et les plus utilisées.
 ### Critères de sélection: 
 Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et les tester ensuite sur les données du projet pour pouvoir évaluer leur performance et précision, est fait sur la base de plusieurs cirtères : 
 #### Tableau de critères :
@@ -66,8 +67,32 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 2. Application de l'algorithme : 
 - Dijkstra est appliqué en partant du point de départ et en explorant chaque nœud marchable (cases de valeur 1) de manière à trouver le chemin le plus court jusqu'au point d'arrivée, en évitant les obstacles (cases de valeur 0).
 - Dijkstra fonctionne bien avec les coûts uniformes (toutes les arêtes ont un coût de 1), mais on peut optimiser plus l'algorithme : 
- 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
- 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
+- 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
+- 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
+
+### L'algorithme : 
+- Variables
+-- G : graphe représenté par une matrice d’adjacence ou une liste d’adjacence
+s : sommet source
+t : sommet de destination
+d : tableau des distances minimales entre s et chaque sommet v du graphe
+π : tableau des prédecesseurs (chemin le plus court) entre s et chaque sommet v du graphe
+Q : file à priorités (tas) contenant les sommets non visités, triée par distance minimale
+Algorithme
+Initialisation :
+d[s] = 0 (distance minimale entre s et lui-même est 0)
+π[s] = s (prédecesseur de s est s lui-même)
+Q = {s} (ajoute s à la file à priorités)
+Tant que Q n’est pas vide :
+u = ExtractMin(Q) (extraire le sommet avec la distance minimale la plus faible de la file à priorités)
+Pour chaque voisin v de u :
+dist = d[u] + weight(u, v) (calculer la distance entre u et v en ajoutant le poids de l’arête)
+Si dist < d[v] :
+d[v] = dist (mise à jour de la distance minimale entre s et v)
+π[v] = u (mise à jour du prédecesseur de v)
+Ajouter v à Q si v n’a pas encore été visité
+Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entre s et t)
+Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
 
 ### 2. A* :
 ### 3. JPS : 
