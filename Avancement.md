@@ -33,13 +33,14 @@ Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et l
 | Capacité à trouver le chemin optimal    | Toujours si l'heuristique est correcte  | Toujours      | Toujours |
 
 ---
+Les autres algorithmes ne sont pas adaptés pour des problèmes de pathfindig sur des grilles 2D, ils sont adaptés plus pour des graphes pondérés.
 
 ### Les 3 algorithmes choisis :
 #### Dijkstra :
 - Principe : Explore  tous les chemins en calculant le coût le plus bas depuis un point de départ jusqu'à chaque autre nœud.
 - Avantages : 1. le Dijkstra trouve toujours le chemin le plus court mais il ne dépend pas d'une heuristique ce qui le rend plus lent que A* dans les grands grilles.
               2. Disponible dans le package igraph pour des graphes pondérés, il peut être utilisé pour des grilles raster converties en graphe.
-#### A (A-star Algorithm)* / A* Bidirectionel : 
+#### A (A-star Algorithm)* / A* Bidirectionnel : 
 - Principe : le A* utilise une fonction heuristique pour explorer les chemins les plus prometteurs en utilisant une combinaison du  coût réel ( noté souvent g(n) ) et une estimation de la distance restante par une heuristique ( noté souvent h(n)).
 - Avantages : Trouve le chemin optimal, rapide grâce à l'heuristique, particulièrement adapté pour les grilles 2D et très efficace dans les environnements avec des obstacles.
 - Le A* bidirectionel : C'est une variante de A* qui lance une recherche simultanément depuis le départ et l'arrivée, il permet dedonc de réduire la zone à explorer.Il est plus rapide que A*, car les deux recherches se rencontrent au milieu du chemin.
@@ -50,4 +51,26 @@ Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et l
               
               
 ## 3.Implémentation des trois algorithmes : 
+### 1. DIJKSTRA :
+Cet algorithme permet de trouver le *plus court chemin* entre deux points sur un graphe pondéré avec des coûts fixes ou variable mais positifs.
+- Dijkstra fonctionne en explorant tous les noeuds d'un graphe en calculant à chaque itération le coût le plus bas.
+- A chaque itération il sélectionne le noeud le plus proche qui n'a pas été encore visité, puis il met à jour les coûts pour ces noeuds voisins et continue jusqu'à l'arrivé au neud voulu.
+
+Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non marchables / 1 pour les zones marchables) :
+
+1. Il faut Représentater de la grille comme un graphe :
+- Chaque case de la matrice qui a une valauer 1 : marchable est considérée comme un nœud du graphe, tandis que 0 (non marchables) sont des obstacles, donc elles n'ont aucune arête connectée.
+- Les voisins adjacents de chaque case (haut, bas, gauche, droite, et les diagonales ) sont connectés par des arêtes.
+- Chaque arête entre deux cases a un coût (pondération). ( 1 par exemple ou autre coût basé sur une métrique de distance)
+
+2. Application de l'algorithme : 
+- Dijkstra est appliqué en partant du point de départ et en explorant chaque nœud marchable (cases de valeur 1) de manière à trouver le chemin le plus court jusqu'au point d'arrivée, en évitant les obstacles (cases de valeur 0).
+- Dijkstra fonctionne bien avec les coûts uniformes (toutes les arêtes ont un coût de 1), mais on peut optimiser plus l'algorithme : 
+- 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
+- 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
+
+### 2. A* :
+### 3. JPS : 
+### 4. A* bidirectionnel : 
+
 
