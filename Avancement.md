@@ -118,19 +118,20 @@ Uniforme signifie ici que l'algorithme traite chaque nœud en fonction du coût 
     * h(n) : L'estimation (heuristique) du coût restant pour aller du nœud actuel n à l’objectif. Elle ne doit jamais surestimer le coût réel pour garantir que A* trouve le chemin optimal.
     * f(n) : La somme des deux coûts, soit   C'est cette valeur qui est utilisée pour déterminer quel nœud explorer ensuite.
 - Principe de fonctionnement:
-  * Initialisation :
-    Placez le point de départ dans une file appelée open set (ensemble ouvert), qui contient les nœuds à explorer.
-    Définissez g(start) = 0 (le coût de départ au départ est 0) et calculez                              f(start) = g(start) + h(start)
-  * Boucle principale :
-    Tant que l’open set n’est pas vide :
-    Sélectionnez le nœud n ayant la plus petite valeur dans l’open set (le nœud le plus prometteur).
-    Si ce nœud est le nœud objectif, l’algorithme est terminé : vous avez trouvé le chemin optimal.
-    Sinon, déplacez le nœud n de l’open set vers un ensemble appelé closed set (ensemble fermé), ce qui signifie qu’il a été exploré.
-    Explorez tous les voisins du nœud n :
-        Pour chaque voisin v, calculez le coût  pour aller au voisin en passant par le nœud n.
-        Si ce coût est inférieur au coût précédent calculé pour v, mettez à jour le chemin :  et  Ajoutez le voisin v à l’open set si ce n'est pas déjà fait.
-    Reconstruction du chemin :
+  1. Initialisation :
+    * Placez le point de départ dans une file appelée open set (ensemble ouvert), qui contient les nœuds à explorer.
+    * Définissez g(start) = 0 (le coût de départ au départ est 0) et calculez                              f(start) = g(start) + h(start)
+  2. Boucle principale :
+    * Tant que l’open set n’est pas vide :
+        1. Sélectionnez le nœud n ayant la plus petite valeur dans l’open set (le nœud le plus prometteur).
+        2. Si ce nœud est le nœud objectif, l’algorithme est terminé : vous avez trouvé le chemin optimal.
+        3. Sinon, déplacez le nœud n de l’open set vers un ensemble appelé closed set (ensemble fermé), ce qui signifie qu’il a été exploré.
+        4. Explorez tous les voisins du nœud n :
+            * Pour chaque voisin v, calculez le coût  pour aller au voisin en passant par le nœud n.
+            * Si ce coût est inférieur au coût précédent calculé pour v, mettez à jour le chemin :  et  Ajoutez le voisin v à l’open set si ce n'est pas déjà fait.
+  3. Reconstruction du chemin :
     Une fois l’objectif atteint, l’algorithme remonte le chemin en utilisant les nœuds parents de chaque nœud pour obtenir le chemin complet du départ à l’objectif.
+ 
 - Les Heuristiques les plus utilisées dans A* :
   La qualité de l’heuristique  H(n) a un impact considérable sur l’efficacité de l’algorithme A* fortement
   * Distance de Manhattan : Utilisée dans les grilles où le mouvement est uniquement permis horizontalement ou verticalement (comme dans les jeux ou cartes 2D).
