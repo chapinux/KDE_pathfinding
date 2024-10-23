@@ -4,14 +4,14 @@ library(igraph)
 matrice_to_graphe <- function(grid) {
   rows <- nrow(grid)
   cols <- ncol(grid)
-  g <- make_empty_graph(n = rows * cols, directed = FALSE)  # Créer un graphe vide
+  g <- make_empty_graph(n = rows * cols, directed = FALSE)  #permet de  Créer un graphe vide
   
-  # Fonction pour obtenir l'indice d'un nœud à partir de ses coordonnées (i, j)
+  # Fonction pour obtenir l'indice d'un nœud à partir de ses coordonnées (i, j) sur la matrice
   index <- function(i, j) {
     return((i - 1) * cols + j)
   }
   
-  # Ajouter des arêtes entre les cases marchables
+  # Ajouter des arêtes entre les cases marchables ( cases de valeur 1)
   for (i in 1:rows) {
     for (j in 1:cols) {
       if (grid[i, j] == 1) {  # Si la case est marchable
@@ -56,7 +56,7 @@ plot(graphe,
 
 # Définir le point de départ et d'arrivée (transformés en indices de graphe)
 depart <- 1  # Coin supérieur gauche (indice 1)
-arrivee <- 25  # Coin inférieur droit (indice 25)
+arrivee <- 20  # Coin inférieur droit (indice 25)
 
 # Mesurer le temps d'exécution du calcul de Dijkstra
 temps_execution <- system.time({
