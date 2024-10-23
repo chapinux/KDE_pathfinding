@@ -23,7 +23,7 @@
 - *Jump Point Search (JPS)*
 ### Critères de sélection: 
 Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et les tester ensuite sur les données du projet pour pouvoir évaluer leur performance et précision, est fait sur la base de plusieurs cirtères : 
--#### Tableau de critères :
+#### Tableau de critères :
 | Critères     | A*  | Dijkstra       |JPS       |
 |---------|------|-------------|-------------|
 | Adaptation aux grilles 2D   | Trés bien adapté   | Bien Adapté       | Optimisé pour les grilles, trés bien adapté pour les grilles continues |
