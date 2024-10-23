@@ -72,6 +72,8 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 <<<<<<< HEAD
 
 ### L'algorithme en pseudo code : 
+```python
+ 
 * Variables
  G : graphe représenté par une matrice d’adjacence ou une liste d’adjacence
  s : sommet source
@@ -93,7 +95,7 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
    π[v] = u (mise à jour du prédecesseur de v)
    Ajouter v à Q si v n’a pas encore été visité
 Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entre s et t)
-   
+  ```
 Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
 =======
 
