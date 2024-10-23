@@ -73,7 +73,7 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 ### L'algorithme : 
 - Variables
 -- G : graphe représenté par une matrice d’adjacence ou une liste d’adjacence
-s : sommet source
+-- s : sommet source
 t : sommet de destination
 d : tableau des distances minimales entre s et chaque sommet v du graphe
 π : tableau des prédecesseurs (chemin le plus court) entre s et chaque sommet v du graphe
