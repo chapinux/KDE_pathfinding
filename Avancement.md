@@ -66,8 +66,8 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 2. Application de l'algorithme : 
 - Dijkstra est appliqué en partant du point de départ et en explorant chaque nœud marchable (cases de valeur 1) de manière à trouver le chemin le plus court jusqu'au point d'arrivée, en évitant les obstacles (cases de valeur 0).
 - Dijkstra fonctionne bien avec les coûts uniformes (toutes les arêtes ont un coût de 1), mais on peut optimiser plus l'algorithme : 
-- 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
-- 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
+ 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
+ 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
 
 ### 2. A* :
 ### 3. JPS : 
