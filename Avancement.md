@@ -4,20 +4,20 @@
 ## 1. Etat de l’art sur le pathfinding 2D
 Le pathfinding 2D est un sous-domaine de l’intelligence artificielle qui consiste à trouver le chemin le plus court et le plus efficace entre deux points dans un environnement 2D, tel qu’un jeu vidéo, un simulateur de robotique, un système de gestion de déplacement ou une image / un raster.
 
-- Quelques principes et approches clés sur le pathfinding 2D:
+### a. Quelques principes et approches clés sur le pathfinding 2D:
 
- * Algorithmes de base : Les algorithmes de base pour le pathfinding 2D incluent Dijkstra, A* (A-star), et Floyd-Warshall. Ces algorithmes sont efficaces pour trouver le chemin le plus court entre deux points dans un graphe ou un réseau.
- *Heuristiques : Les heuristiques sont des approximations utilisées pour guider l’algorithme de pathfinding vers le bon chemin. Dans le cas du pathfinding 2D, les heuristiques couramment utilisées incluent la distance euclidienne, la direction vers l’objectif et la présence d’obstacles.
+* Algorithmes de base : Les algorithmes de base pour le pathfinding 2D incluent Dijkstra, A* (A-star), et Floyd-Warshall. Ces algorithmes sont efficaces pour trouver le chemin le plus court entre deux points dans un graphe ou un réseau.
+* Heuristiques : Les heuristiques sont des approximations utilisées pour guider l’algorithme de pathfinding vers le bon chemin. Dans le cas du pathfinding 2D, les heuristiques couramment utilisées incluent la distance euclidienne, la direction vers l’objectif et la présence d’obstacles.
 * Graphe et réseau : Le pathfinding 2D est souvent représenté comme un graphe ou un réseau, où les nœuds représentent les positions dans l’environnement et les arêtes représentent les mouvements possibles entre ces positions.
 * Tile-based approach : Dans les jeux vidéo et les simulateurs, l’environnement est souvent représenté comme une grille de tuiles (tiles). Les algorithmes de pathfinding 2D peuvent être adaptés pour fonctionner avec des grilles de tuiles, en utilisant des techniques telles que la recherche de chemin dans les tuiles adjacentes.
 * Librairies et outils : Il existe plusieurs librairies et outils pour le pathfinding 2D, notamment A* Pathfinding Project pour Unity et Pathfinding pour Python.
 
-- Exemples d’implémentation :
+### b. Exemples d’implémentation :
 * Dans les jeux vidéo, le pathfinding 2D est utilisé pour faire se déplacer les personnages non jouables, les ennemis et les objets.
 * Dans les simulateurs de robotique, le pathfinding 2D est utilisé pour faire se déplacer les robots et éviter les obstacles.
 * Dans les systèmes de gestion de déplacement, le pathfinding 2D est utilisé pour planifier les itinéraires des véhicules et des piétons.
 
-- Défis et limitations :
+### c. Défis et limitations :
 * La complexité de l’environnement : les environnements 2D peuvent être complexes.
 * La nécessité de prendre en compte les contraintes : les algorithmes de pathfinding 2D doivent prendre en compte les contraintes telles que la vitesse, la distance et la sécurité.
 * La nécessité de trouver un compromis entre efficacité et précision : les algorithmes de pathfinding 2D doivent trouver un compromis entre l’efficacité et la précision pour trouver le chemin le plus court et le plus efficace.
