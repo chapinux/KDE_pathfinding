@@ -56,13 +56,15 @@ plot(graphe,
 
 # Définir le point de départ et d'arrivée (transformés en indices de graphe)
 depart <- 1  # Coin supérieur gauche (indice 1)
-arrivee <- 20  # Coin inférieur droit (indice 25)
+arrivee <- 25  # Coin inférieur droit (indice 25)
 
 # Mesurer le temps d'exécution du calcul de Dijkstra
 temps_execution <- system.time({
-  # Appliquer l'algorithme de Dijkstra pour trouver le chemin le plus court
+  # Appliquer l'algorithme de Dijkstra pour trouver le chemin le plus court : fonction "shortest_paths"s
   resultat <- shortest_paths(graphe, from = depart, to = arrivee)
 })
+
+# Sans system.time :   resultat <- shortest_paths(graphe, from = depart, to = arrivee)
 
 # Afficher le chemin trouvé (indices des nœuds)
 print(resultat$vpath[[1]])
