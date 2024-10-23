@@ -8,6 +8,7 @@
 2. [Le pathfinding A* et l'optimisation pour des grilles 2D, Memoire de Master : Université de Poitiers et l’Université de La Rochelle](https://www.guillaumelevieux.com/siteperso/contents/recherchem1/essamir/pathfinding.pdf)
 3. [A Visual Explanation of Jump Point Search, Site Web](https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search/)
 4. 
+=======
 ## 2. Sélection de trois algorithmes efficaces : 
 
 ### Listes d'algorithmes de pathfindig : 
@@ -35,6 +36,8 @@ Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et l
 
 ---
 Les autres algorithmes ne sont pas adaptés pour des problèmes de pathfindig sur des grilles 2D, ils sont adaptés plus pour des graphes pondérés.
+
+=======
 
 ### Les 3 algorithmes choisis :
 #### Dijkstra :
@@ -69,7 +72,6 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 - Dijkstra fonctionne bien avec les coûts uniformes (toutes les arêtes ont un coût de 1), mais on peut optimiser plus l'algorithme : 
 - 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
 - 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
-<<<<<<< HEAD
 
 ### Etapes de l'algorithme : 
 ```R
@@ -96,11 +98,14 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
        Ajouter v à Q si v n’a pas encore été visité
 3. Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entre s et t)
   ```
-Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
+ ### Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
 =======
 
 ### 2. A* :
+=======
 ### 3. JPS : 
+=======
 ### 4. A* bidirectionnel : 
+=======
 
 
