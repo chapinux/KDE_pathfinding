@@ -21,6 +21,7 @@
 - *Johnson’s Algorithm*
 - *Bi-directional A-Star*
 - *Jump Point Search (JPS)*
+Cette liste n'est pas exhaustive , mais ce sont les algorithmes de pathifinding les plus efficaces et les plus utilisées.
 ### Critères de sélection: 
 Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et les tester ensuite sur les données du projet pour pouvoir évaluer leur performance et précision, est fait sur la base de plusieurs cirtères : 
 #### Tableau de critères :
@@ -66,9 +67,17 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 2. Application de l'algorithme : 
 - Dijkstra est appliqué en partant du point de départ et en explorant chaque nœud marchable (cases de valeur 1) de manière à trouver le chemin le plus court jusqu'au point d'arrivée, en évitant les obstacles (cases de valeur 0).
 - Dijkstra fonctionne bien avec les coûts uniformes (toutes les arêtes ont un coût de 1), mais on peut optimiser plus l'algorithme : 
- 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
- 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
+- 1. Rendre les  coûts variables en essayant de simplifier des cases marchables horizontalement ou verticalement 
+- 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
 
+### Etapes de l'algorithme : 
+![Un Graphe pondéré](diaporama/ressources/images/graphe.png)
+Théoriquement pour mieux comprendre l'algorithme et arriver au bon résultat on représente notre graphe dans une tableau qui contient les noeuds du graphes et les distances pour arriver à chacun de ces noeuds.
+
+1.Initialisation : 
+
+2.
+3.
 ### 2. A* :
 ### 3. JPS : 
 ### 4. A* bidirectionnel : 
