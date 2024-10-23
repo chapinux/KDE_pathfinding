@@ -42,11 +42,12 @@ grid <- matrix(c(1, 1, 1, 0, 1,
                  0, 0, 1, 1, 1,
                  1, 1, 1, 1, 1), nrow = 5, byrow = TRUE)
 
+
 # Transformer la matrice en graphe
 graphe <- matrice_to_graphe(grid)
 
 ## Plot graphe : 
-# Afficher le graphe dans la zone de tracé
+## Afficher le graphe dans la zone de tracé
 plot(graphe, 
      vertex.label = 1:vcount(graphe),  # Afficher les indices des nœuds
      vertex.size = 15,                 # Taille des nœuds
