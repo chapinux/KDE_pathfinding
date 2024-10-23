@@ -8,7 +8,7 @@
 2. [Le pathfinding A* et l'optimisation pour des grilles 2D, Memoire de Master : Université de Poitiers et l’Université de La Rochelle](https://www.guillaumelevieux.com/siteperso/contents/recherchem1/essamir/pathfinding.pdf)
 3. [A Visual Explanation of Jump Point Search, Site Web](https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search/)
 4. 
-=======
+
 ## 2. Sélection de trois algorithmes efficaces : 
 
 ### Listes d'algorithmes de pathfindig : 
@@ -37,7 +37,7 @@ Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et l
 ---
 Les autres algorithmes ne sont pas adaptés pour des problèmes de pathfindig sur des grilles 2D, ils sont adaptés plus pour des graphes pondérés.
 
-=======
+
 
 ### Les 3 algorithmes choisis :
 #### Dijkstra :
@@ -99,13 +99,48 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 3. Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entre s et t)
   ```
  ### Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
-=======
+
 
 ### 2. A* :
-=======
+L’algorithme A* est considéré parmi les meilleurs algorithmes de pathfinding. Il est utilisé généralement pour trouver le plus court chemin dans un graphe en combinant deux concepts principales de pathfinding :
+  1. La recherche en largeur ( BFS ) :
+La recherche en largeur d'abord (BFS - Breadth-First Search) consiste à explorer un graphe en largeur, c'est-à-dire qu'il parcourt d'abord tous les voisins immédiats du nœud de départ avant de s'aventurer plus loin. Pour ce faire, BFS utilise une file (queue) pour garder la trace des nœuds à visiter dans l'ordre où ils ont été découverts.
+  2. La recherche en cout uniforme (Dijkstra) :
+- But : Trouver le chemin le moins coûteux (ou le plus court) entre un point de départ et tous les autres points dans un graphe pondéré.
+Dijkstra explore les chemins en minimisant le coût cumulé depuis le point de départ vers les autres nœuds.
+Uniforme signifie ici que l'algorithme traite chaque nœud en fonction du coût réel accumulé, et non en fonction d'une estimation (comme c'est le cas pour le A*, qui utilise une heuristique).
+ 
+- Concepts clés dans A* :
+  * Graphe : une grille qui peut représenter : une maquette de jeu 2D ou une carte…. ou un système de navigation GPS) où chaque nœud représente un emplacement.
+  * nœuds : Un nœud est une position dans l'espace que l'algorithme va explorer. Chaque nœud possède un coût pour être atteint.
+  * Heuristique : Une fonction qui estime le coût restant pour atteindre l’objectif à partir d’un nœud donné. Elle permet à l’algorithme de choisir le chemin qui semble le plus prometteur.
+    * g(n) : Le coût exact du chemin allant du point de départ jusqu'au nœud actuel n.
+    * h(n) : L'estimation (heuristique) du coût restant pour aller du nœud actuel n à l’objectif. Elle ne doit jamais surestimer le coût réel pour garantir que A* trouve le chemin optimal.
+    * f(n) : La somme des deux coûts, soit   C'est cette valeur qui est utilisée pour déterminer quel nœud explorer ensuite.
+- Principe de fonctionnement:
+  * Initialisation :
+    Placez le point de départ dans une file appelée open set (ensemble ouvert), qui contient les nœuds à explorer.
+    Définissez g(start) = 0 (le coût de départ au départ est 0) et calculez                              f(start) = g(start) + h(start)
+  * Boucle principale :
+    Tant que l’open set n’est pas vide :
+    Sélectionnez le nœud n ayant la plus petite valeur dans l’open set (le nœud le plus prometteur).
+    Si ce nœud est le nœud objectif, l’algorithme est terminé : vous avez trouvé le chemin optimal.
+    Sinon, déplacez le nœud n de l’open set vers un ensemble appelé closed set (ensemble fermé), ce qui signifie qu’il a été exploré.
+    Explorez tous les voisins du nœud n :
+        Pour chaque voisin v, calculez le coût  pour aller au voisin en passant par le nœud n.
+        Si ce coût est inférieur au coût précédent calculé pour v, mettez à jour le chemin :  et  Ajoutez le voisin v à l’open set si ce n'est pas déjà fait.
+    Reconstruction du chemin :
+    Une fois l’objectif atteint, l’algorithme remonte le chemin en utilisant les nœuds parents de chaque nœud pour obtenir le chemin complet du départ à l’objectif.
+- Les Heuristiques les plus utilisées dans A* :
+  La qualité de l’heuristique  H(n) a un impact considérable sur l’efficacité de l’algorithme A* fortement
+  * Distance de Manhattan : Utilisée dans les grilles où le mouvement est uniquement permis horizontalement ou verticalement (comme dans les jeux ou cartes 2D).
+  * Distance Euclidienne : Utilisée lorsque le mouvement est permis dans toutes les directions (2D ou 3D).
+  * Distance diagonale : Utilisée dans des grilles où le déplacement en diagonale est permis.
+
+
 ### 3. JPS : 
-=======
+
 ### 4. A* bidirectionnel : 
-=======
+
 
 
