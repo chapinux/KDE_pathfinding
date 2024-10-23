@@ -71,8 +71,8 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
 - 2. Rendre les coûts  variables en fonction du terrain (exemple : terrain difficile, passage à éviter .. ? ).
 <<<<<<< HEAD
 
-### L'algorithme en pseudo code : 
-```python
+### Etapes de l'algorithme : 
+```R
  
 * Variables
  G : graphe représenté par une matrice d’adjacence ou une liste d’adjacence
@@ -83,30 +83,22 @@ Pour utiliser Dijkstra sur une image raster ( matrice 2D: 0 pour les zones non m
  Q : file à priorités (tas) contenant les sommets non visités, triée par distance minimale
 * Algorithme
 1. Initialisation :
- d[s] = 0 (distance minimale entre s et lui-même est 0)
- π[s] = s (prédecesseur de s est s lui-même)
- Q = {s} (ajoute s à la file à priorités)
- Tant que Q n’est pas vide :
- u = ExtractMin(Q) (extraire le sommet avec la distance minimale la plus faible de la file à priorités)
- Pour chaque voisin v de u :
-   dist = d[u] + weight(u, v) (calculer la distance entre u et v en ajoutant le poids de l’arête)
-    Si dist < d[v] :
-   d[v] = dist (mise à jour de la distance minimale entre s et v)
-   π[v] = u (mise à jour du prédecesseur de v)
-   Ajouter v à Q si v n’a pas encore été visité
-Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entre s et t)
+     d[s] = 0 (distance minimale entre s et lui-même est 0)
+     π[s] = s (prédecesseur de s est s lui-même)
+     Q = {s} (ajoute s à la file à priorités)
+2. Tant que Q n’est pas vide :
+    u = ExtractMin(Q) (extraire le sommet avec la distance minimale la plus faible de la file à priorités)
+    Pour chaque voisin v de u :
+       dist = d[u] + weight(u, v) (calculer la distance entre u et v en ajoutant le poids de l’arête)
+       Si dist < d[v] :
+           d[v] = dist (mise à jour de la distance minimale entre s et v)
+           π[v] = u (mise à jour du prédecesseur de v)
+       Ajouter v à Q si v n’a pas encore été visité
+3. Retourner d[t] (distance minimale entre s et t) et π (chemin le plus court entre s et t)
   ```
 Note : ExtractMin(Q) est une fonction qui extrait le sommet avec la distance minimale la plus faible de la file à priorités Q. weight(u, v) est une fonction qui retourne le poids de l’arête entre les sommets u et v.
 =======
 
-### Etapes de l'algorithme : 
-![Un Graphe pondéré](diaporama/ressources/images/graphe.png)
-Théoriquement pour mieux comprendre l'algorithme et arriver au bon résultat on représente notre graphe dans une tableau qui contient les noeuds du graphes et les distances pour arriver à chacun de ces noeuds.
-
-1.Initialisation : 
-
-2.
-3.
 ### 2. A* :
 ### 3. JPS : 
 ### 4. A* bidirectionnel : 
