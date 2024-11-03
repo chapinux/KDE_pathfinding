@@ -2,8 +2,7 @@
  PIÉTON
  
 ## 1. Etat de l’art sur le pathfinding 2D
-Le pathfinding 2D est un sous-domaine de l’intelligence artificielle qui consiste à trouver le chemin le plus court et le plus efficace entre deux points dans un environnement 2D, tel qu’un jeu vidéo, un simulateur de robotique, un système de gestion de déplacement ou une image / un raster.
-
+Le pathfinding en 2D (ou recherche de chemin en 2D) est un problème d'intelligence artificielle consistant à déterminer le chemin le plus court ou le plus efficace entre deux points dans un environnement bidimensionnel, tel qu’un jeu, une simulation, ou un système d’information géographique. Un tel algorithme de recherche de chemin vise à trouver un itinéraire qui évite les obstacles, minimise la distance ou le temps, et satisfait des contraintes spécifiques.
 ### a. Quelques principes et approches clés sur le pathfinding 2D:
 
 * Algorithmes de base : Les algorithmes de base pour le pathfinding 2D incluent Dijkstra, A* (A-star), et Floyd-Warshall. Ces algorithmes sont efficaces pour trouver le chemin le plus court entre deux points dans un graphe ou un réseau.
