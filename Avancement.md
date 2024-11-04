@@ -160,7 +160,23 @@ Uniforme signifie ici que l'algorithme traite chaque nœud en fonction du coût 
 ### Code en R : *Voir : " Code/A_star.R "*
 
 ### 3. JPS : 
+L'algorithme Jump Point Search est une version améliorée de l'algorithme A\*, combinée à des règles d’élagage simples qui, appliquées de manière récursive, permettent d’identifier et d’éliminer de nombreuses symétries de chemins dans une grille non orientée connectée en 8 directions. 
+Il existe deux ensembles de règles dans cet algorithme : *les règles d’élagage et les règles de saut*.
+    1. Règles d'élagage : Les règles d'élagage permettent de décider si un nœud voisin 𝑛doit être conservé pour l’étape suivante ou élagué.
+    Soient x : le noeud actuel , n  :le noeud suivant et p : le noeud précédent à x ( à partir duquel on 'est arrivé à x)
+    Il y a deux grandes règles d'élagage: 
+    
+    - Règle 1 : Élagage des Chemins Plus Longs
+        But : Ne pas conserver les chemins qui ne sont pas les plus courts.
+        Principe : Si on trouve un chemin alternatif plus court entre p et n, (par un autre nœud y), alors il n'est pas nécessaire de conserver le chemin passant par x, le chemin (p,x,n) est élagué.
+    - Règle 2 : Élagage des Chemins Sans Mouvement Diagonal Optimal
+        But : Minimiser les déplacements en ligne droite lorsque des diagonales peuvent être utiles.
+        Principe : Si un autre chemin permet d’atteindre n avec un déplacement en diagonale plus tôt ,au lieu de parcours horizontaux ou verticaux, alors il est préféré.
+        Exemple : si un chemin C2 = (p,y,n) a une longueur équivalente au chemin C1 = (p,x,n)  mais permet une diagonale plus tôt, alors il C1 sera élagué.
+        Cela assure une exploration plus directe des directions diagonales, souvent avantageuse dans les grilles.
 
+
+    2. Règles de saut : 
 ### 4. A* bidirectionnel : 
 
 
