@@ -162,7 +162,8 @@ Uniforme signifie ici que l'algorithme traite chaque nœud en fonction du coût 
 ### 3. JPS : 
 L'algorithme Jump Point Search est une version améliorée de l'algorithme A\*, combinée à des règles d’élagage simples qui, appliquées de manière récursive, permettent d’identifier et d’éliminer de nombreuses symétries de chemins dans une grille non orientée connectée en 8 directions. 
 Il existe deux ensembles de règles dans cet algorithme : *les règles d’élagage et les règles de saut*.
-    1. Règles d'élagage : Les règles d'élagage permettent de décider si un nœud voisin 𝑛doit être conservé pour l’étape suivante ou élagué.
+    
+  1. Règles d'élagage : Les règles d'élagage permettent de décider si un nœud voisin 𝑛doit être conservé pour l’étape suivante ou élagué.
     Soient x : le noeud actuel , n  :le noeud suivant et p : le noeud précédent à x ( à partir duquel on 'est arrivé à x)
     Il y a deux grandes règles d'élagage: 
     
@@ -176,7 +177,14 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
         Cela assure une exploration plus directe des directions diagonales, souvent avantageuse dans les grilles.
 
 
-    2. Règles de saut : 
+  2. Règles de saut : 
+- Concepts clés dans JSP :
+  - Élagage (Prunning) : 
+  - Saut (Jumping) :
+  - Successeurs naturels : 
+  - Successeurs forcés : 
+  - Successeurs 
+
 ### 4. A* bidirectionnel : 
 
 
