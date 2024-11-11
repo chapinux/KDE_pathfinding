@@ -1,95 +1,160 @@
-# import de la librairie igraph 
-library(igraph)
+# Dimensions grille
+grid_rows <- 10
+grid_cols <- 10
+total_nodes <- grid_rows * grid_cols
 
-# calcul de la distance euclidienne entre deux points
-euclidean_distance <- function(point1, point2) {
-  return(sqrt((point1[1] - point2[1])^2 + (point1[2] - point2[2])^2))
+# Calcul distance euclidienne
+euclidean_distance <- function(row1, col1, row2, col2) {
+  return(sqrt((row1 - row2)^2 + (col1 - col2)^2))
 }
 
-# 
-coordinates <- list(
-  c(1, 2),  
-  c(2, 3),  
-  c(4, 1),
-  c(6, 2),  
-  c(3, 5)   
-)
+# Fonction pour obtenir les coordonnées 
+get_coordinates <- function(node, grid_cols) {
+  row <- (node - 1) %/% grid_cols
+  col <- (node - 1) %% grid_cols
+  return(c(row, col))
+}
 
-# création de la matrice des distances au lieu de la matrice d'adjacences
-distance_matrix <- matrix(0, nrow = length(coordinates), ncol = length(coordinates))
-
-for (i in 1:length(coordinates)) {
-  for (j in 1:length(coordinates)) {
-    if (i != j) {
-      distance_matrix[i, j] <- euclidean_distance(coordinates[[i]], coordinates[[j]])
+# Construction liste adjacence pour la grille
+adjacency_list <- vector("list", total_nodes)
+for (node in 1:total_nodes) {
+  node_coords <- get_coordinates(node, grid_cols)
+  neighbors <- list()
+  
+  # Directions pour les voisins
+  directions <- list(
+    c(-1, 0),  # Haut
+    c(1, 0),   # Bas
+    c(0, -1),  # Gauche
+    c(0, 1)    # Droite
+  )
+  
+  # Pour chaque direction, vérification du voisin dans les limites de la grille
+  for (dir in directions) {
+    neighbor_coords <- node_coords + dir
+    if (neighbor_coords[1] >= 0 && neighbor_coords[1] < grid_rows &&
+        neighbor_coords[2] >= 0 && neighbor_coords[2] < grid_cols) {
+      neighbor_index <- neighbor_coords[1] * grid_cols + neighbor_coords[2] + 1
+      neighbors[[length(neighbors) + 1]] <- list(node = neighbor_index, distance = 1)
     }
   }
+  adjacency_list[[node]] <- neighbors
 }
 
-print(distance_matrix)
+print(adjacency_list[1])
 
-# A*
-a_star <- function(graph, heuristic, start, goal) {
-  #Utilisation de la matrice d'adjacence pour trouver le nombre de noeuds e.g le nombre de lignes ou colonnes qui donne taille tableau
-  #Initialisation des distances à l'infini
-  distances = rep(Inf, nrow(graph))
-  #initialisation de la distance à 0
+# Algorithme A* pour la grille avec une heuristique euclidienne
+a_star <- function(graph, heuristic, start, goal, grid_cols) {
+  # Initialisation des distances infini
+  distances <- rep(Inf, length(graph))
+  distances[start] <- 0
   
-  distances[start] = 0
-  #initialisation de toutes les priorités à l'infini
+  # Initialisation des priorités infini
+  priorities <- rep(Inf, length(graph))
+  priorities[start] <- heuristic(start, goal, grid_cols)
   
-  priorities = rep(Inf, nrow(graph))
-  #le noeud de départ a une priorité qui fait la distance de l'heuristique de start jusqu'à goal
+  # Liste noeuds visités
+  visited <- rep(FALSE, length(graph))
   
-  priorities[start] = heuristic(coordinates[[start]], coordinates[[goal]])
-  # initialisation de la liste des noeuds visités
-  visited = rep(FALSE, nrow(graph))
+  # Liste des prédécesseurs pour reconstruire le chemin
+  predecessors <- rep(NA, length(graph))
   
   repeat {
-    lowest_priority = Inf 
-    lowest_priority_index = -1
+    lowest_priority <- Inf
+    lowest_priority_index <- -1
     
-    #si un noeud non visité et qu'il a une priorité plus importante
-    
-    
-    for(i in seq_along(priorities)) {
+    # Trouver le noeud non visité avec la priorité la plus basse
+    for (i in seq_along(priorities)) {
       if (priorities[i] < lowest_priority && visited[i] == FALSE) {
-        lowest_priority = priorities[i]
-        lowest_priority_index = i
+        lowest_priority <- priorities[i]
+        lowest_priority_index <- i
       }
     }
     
     if (lowest_priority_index == -1) {
-      return (-1)
+      return(list(path = NULL, cost = -1))  # Aucun chemin trouvé
     }
     
-    #si on atteint le noeud goal, on stoppe l'algo
-    
-    else if (lowest_priority_index == goal) {
-      print("Yeppee! Goal node")
-      return(distances[lowest_priority_index])
+    # Si on a atteint le but reconstruire le chemin
+    if (lowest_priority_index == goal) {
+      path <- c()
+      current <- goal
+      while (!is.na(current)) {
+        path <- c(current, path)
+        current <- predecessors[current]
+      }
+      return(list(path = path, cost = distances[goal]))
     }
     
-    for(i in seq_along(graph[lowest_priority_index,])) {
-      if (graph[lowest_priority_index, i] != 0 && visited[i] == FALSE) {
-        if (distances[lowest_priority_index] + graph[lowest_priority_index, i] < distances[i]) {
-          # cette distance est alors plus courte que la distance précédente
-          distances[i] = distances[lowest_priority_index] + graph[lowest_priority_index, i]
-          #update de la distance estimée avec l'heuristique
-          priorities[i] = distances[i] + heuristic(coordinates[[i]], coordinates[[goal]])
+    # Explorer les voisins noeud actuel
+    current_node <- lowest_priority_index
+    for (neighbor in graph[[current_node]]) {
+      neighbor_node <- neighbor$node
+      neighbor_distance <- neighbor$distance
+      if (visited[neighbor_node] == FALSE) {
+        new_distance <- distances[current_node] + neighbor_distance
+        if (new_distance < distances[neighbor_node]) {
+          # Mise à jour distance et priorité pour ce voisin
+          distances[neighbor_node] <- new_distance
+          priorities[neighbor_node] <- new_distance + heuristic(neighbor_node, goal, grid_cols)
+          predecessors[neighbor_node] <- current_node
         }
       }
     }
-    # on met le noeud a "visité"
     
-    visited[lowest_priority_index] = TRUE
+    # Marquer le noeud actuel comme visité
+    visited[lowest_priority_index] <- TRUE
   }
 }
 
-# Heuristique basée sur la distance Euclidienne
-euclidean_heuristic <- function(start, goal) {
-  return(euclidean_distance(start, goal))
+# Heuristique basée sur la distance euclidienne entre les positions de la grille
+euclidean_heuristic <- function(start, goal, grid_cols) {
+  start_coords <- get_coordinates(start, grid_cols)
+  goal_coords <- get_coordinates(goal, grid_cols)
+  return(euclidean_distance(start_coords[1], start_coords[2], goal_coords[1], goal_coords[2]))
 }
 
-# Appel de la fonction A* pour trouver un chemin entre les points 1 et 4
-print(a_star(distance_matrix, euclidean_heuristic, 1, 4))
+# Fonction de visualisation pour la grille
+plot_grid <- function(grid_rows, grid_cols, adjacency_list, start, goal, path = NULL) {
+  plot(1, type = "n", xlim = c(0, grid_cols - 1), ylim = c(0, grid_rows - 1),
+       xlab = "Colonne", ylab = "Ligne", main = "Représentation de la grille avec départ et but",
+       xaxt = "n", yaxt = "n")
+  
+  # Ajouter les points de la grille et les connexions
+  for (node in 1:length(adjacency_list)) {
+    coords <- c((node - 1) %/% grid_cols, (node - 1) %% grid_cols)
+    points(coords[2], grid_rows - 1 - coords[1], pch = 19, col = ifelse(node == start, "green", ifelse(node == goal, "red", "black")))
+    
+    for (neighbor in adjacency_list[[node]]) {
+      neighbor_coords <- c((neighbor$node - 1) %/% grid_cols, (neighbor$node - 1) %% grid_cols)
+      segments(coords[2], grid_rows - 1 - coords[1], neighbor_coords[2], grid_rows - 1 - neighbor_coords[1], col = "grey")
+    }
+  }
+  
+  # Marquer les noeuds départ et but
+  text((start - 1) %% grid_cols, grid_rows - 1 - (start - 1) %/% grid_cols, labels = "D", pos = 3, col = "green", font = 2)
+  text((goal - 1) %% grid_cols, grid_rows - 1 - (goal - 1) %/% grid_cols, labels = "B", pos = 3, col = "red", font = 2)
+  
+  # Dessiner chemin si disponible
+  if (!is.null(path)) {
+    for (i in 1:(length(path) - 1)) {
+      from <- path[i]
+      to <- path[i + 1]
+      from_coords <- c((from - 1) %/% grid_cols, (from - 1) %% grid_cols)
+      to_coords <- c((to - 1) %/% grid_cols, (to - 1) %% grid_cols)
+      segments(from_coords[2], grid_rows - 1 - from_coords[1], to_coords[2], grid_rows - 1 - to_coords[1], col = "blue", lwd = 2)
+    }
+  }
+}
+
+# Définition noeuds départ et but
+start_node <- 1
+goal_node <- 100
+
+# Exécution
+result <- a_star(adjacency_list, euclidean_heuristic, start_node, goal_node, grid_cols)
+cat("Chemin :", result$path, "\n")
+cat("Coût :", result$cost, "\n")
+
+# Affichage
+plot_grid(grid_rows, grid_cols, adjacency_list, start_node, goal_node, result$path)
