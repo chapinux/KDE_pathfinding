@@ -178,11 +178,15 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
         Cela assure une exploration plus directe des directions diagonales, souvent avantageuse dans les grilles.
 
 
-  2. Règles de saut : 
+  2. Règles de saut(Jumping Rules): JPS applique à chaque voisin forcé ou naturel du nœud actuel x une simple procédure récursive de « saut » ; l'objectif est de remplacer chaque voisin n par un successeur alternatif n' situé plus loin.
+  
 - Concepts clés dans JSP :
-  - Élagage (Prunning) : 
-  - Saut (Jumping) :
-  - Successeurs naturels : 
+  - Points de saut (Jump Points): Un point de saut est un noeud important dans lequel il faut prendre une décision de direction ( soit à cause d'un obstacle , soit parcequ'il permet d'accéder à la direction optimale..). JPS identifie ces points de saust pour éviter les noeuds intermédiaires inutiles.
+  - Élagage des voisins(Neighbour Prunning) : JPS utilise des règles pour ignorer les noeuds voisins qui ne contribuent pas aux chemins les plus courts vers la destination.
+  - Successeurs naturels : pour un noeud x dont le parent est p(x) et n un voisin potentiel de x , Le noeud n est dit successeur naturel de x si : 
+          - La direction de déplacement de p(x) à x, puis de x à n reste la même.
+          - Il n'y a pas d'obstacle ou de contrainte de grille qui nécessiterait un changement de direction pour atteindre n.
+          
   - Successeurs forcés : 
   - Successeurs 
 
