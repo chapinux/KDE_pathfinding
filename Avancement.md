@@ -210,15 +210,6 @@ Le fonctionnement de cet algorithme se résume en 5 étapes clés : \
     2. Élagage des voisins : A chaque noeud x , l'algorithme applique les règles d'élagage pour réduire le nombre de voisins à considérer. En ne gardant donc que les successeurs naturels et forcés.\
     Pour un déplacement horizontal ou vertical :
 
-\[
-\text{len}(\langle p(x), n \rangle \setminus x) \leq \text{len}(\langle p(x), x, n \rangle)
-\]
-
-Pour un déplacement diagonal :
-
-\[
-\text{len}(\langle p(x), n \rangle \setminus x) < \text{len}(\langle p(x), x, n \rangle)
-\]
 
     3. Application du mécanisme de Saut :
     4. Calcul des Coûts : 
@@ -227,4 +218,5 @@ Pour un déplacement diagonal :
 ### 4. A* bidirectionnel : 
 
 
-//
+##  Pour lire la suite du rapport : https://www.overleaf.com/read/bcxzbmgwmjgz#01e321
+
