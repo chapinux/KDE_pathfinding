@@ -166,7 +166,7 @@ Le JPS est conçu surtout pour des grilles bidemnsionnelles à coût uniforme. \
 Il existe deux ensembles de règles dans cet algorithme : *les règles d’élagage et les règles de saut*.
     
   1. Règles d'élagage : Les règles d'élagage permettent de décider si un nœud voisin 𝑛doit être conservé pour l’étape suivante ou élagué.
-    Soient x : le noeud actuel , n  :le noeud suivant et p : le noeud précédent à x ( à partir duquel on 'est arrivé à x)
+    Soient x : le noeud actuel , n : le noeud suivant et p : le noeud précédent à x ( à partir duquel on 'est arrivé à x)
     Il y a deux grandes règles d'élagage: 
     
     - Règle 1 : Élagage des Chemins Plus Longs
@@ -175,7 +175,7 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
     - Règle 2 : Élagage des Chemins Sans Mouvement Diagonal Optimal
         But : Minimiser les déplacements en ligne droite lorsque des diagonales peuvent être utiles.
         Principe : Si un autre chemin permet d’atteindre n avec un déplacement en diagonale plus tôt ,au lieu de parcours horizontaux ou verticaux, alors il est préféré.
-        Exemple : si un chemin C2 = (p,y,n) a une longueur équivalente au chemin C1 = (p,x,n)  mais permet une diagonale plus tôt, alors il C1 sera élagué.
+        Exemple : si un chemin C2 = (p,y,n) a une longueur équivalente au chemin C1 = (p,x,n)  mais permet une diagonale plus tôt, alors C1 sera élagué.
         Cela assure une exploration plus directe des directions diagonales, souvent avantageuse dans les grilles.
 
 
@@ -200,8 +200,26 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
 - Principe de fonctionnement:
 Dans A*, Chaque noeud est examiné individuellement, or le JPS identifie et n'explore que les points de saut( jump point).\
 Le fonctionnement de cet algorithme se résume en 5 étapes clés : \
-    1. Identification des points de saut :
-    2. Élagage des voisins : 
+    1. Identification des points de saut :\
+    Pratiquement un noeud y est considéré comme point de saut s'il est atteint à partir d'un noeud x suivant un direction d lorseque l'une des conditions suivantes est remplie : \
+      * y est le noeud de destination .\
+      * y possède un voisin forcé dans une direction perpendiculaire à d.\
+      * Pour un mouvement diagonal, y possède un successeur dans une direction perpendiculaire.\
+      Mathématiquement : y = x + k \cdot \vec{d} ; où k un entier et y un point de saut.
+      
+    2. Élagage des voisins : A chaque noeud x , l'algorithme applique les règles d'élagage pour réduire le nombre de voisins à considérer. En ne gardant donc que les successeurs naturels et forcés.\
+    Pour un déplacement horizontal ou vertical :
+
+\[
+\text{len}(\langle p(x), n \rangle \setminus x) \leq \text{len}(\langle p(x), x, n \rangle)
+\]
+
+Pour un déplacement diagonal :
+
+\[
+\text{len}(\langle p(x), n \rangle \setminus x) < \text{len}(\langle p(x), x, n \rangle)
+\]
+
     3. Application du mécanisme de Saut :
     4. Calcul des Coûts : 
     5. Vérification de l'optimalité :
