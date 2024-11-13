@@ -191,11 +191,7 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
           - La direction de déplacement de p(x) à x, puis de x à n reste la même.
           - Il n'y a pas d'obstacle ou de contrainte  qui nécessiterait un changement de direction pour atteindre n.
     En réduisant les successeurs aux successeurs naturels, Le JPS élague les noeuds qui contribuent moins dans la progression vers la destination.
-          
-          ![Texte alternatif de l'image](./diaporama/ressources/images/QGis_Logo.png)
-
-          > *Source :* [Google Drive](https://drive.google.com/file/d/1AbCdefGhijkLMNopQrStuVwXYZ/view?usp=sharing)
-
+ 
   - Successeurs forcés : Un noeud n est dit successeur forcé de x si : 
           - n n'est pas un successeur naturel de x .
           - La contrainte imposée par un obstacle ou une limitation de l'environnement empêche l'algorithme d'ignorer ce noeud.
