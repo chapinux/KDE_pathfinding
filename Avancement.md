@@ -201,4 +201,4 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
 ### 4. A* bidirectionnel : 
 
 
-
+//
