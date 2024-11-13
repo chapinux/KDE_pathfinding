@@ -187,12 +187,12 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
 - Concepts clés dans JSP :
   - Points de saut (Jump Points): Un point de saut est un noeud important dans lequel il faut prendre une décision de direction ( soit à cause d'un obstacle , soit parcequ'il permet d'accéder à la direction optimale..). JPS identifie ces points de saust pour éviter les noeuds intermédiaires inutiles.
   - Élagage des voisins(Neighbour Prunning) : JPS utilise des règles pour ignorer les noeuds voisins qui ne contribuent pas aux chemins les plus courts vers la destination.
-  - Successeurs naturels : pour un noeud x dont le parent est p(x) et n un voisin potentiel de x , Le noeud n est dit successeur naturel de x si : 
-          - La direction de déplacement de p(x) à x, puis de x à n reste la même.
-          - Il n'y a pas d'obstacle ou de contrainte  qui nécessiterait un changement de direction pour atteindre n.
+  - Successeurs naturels : pour un noeud x dont le parent est p(x) et n un voisin potentiel de x , Le noeud n est dit successeur naturel de x si : \
+          - La direction de déplacement de p(x) à x, puis de x à n reste la même.\
+          - Il n'y a pas d'obstacle ou de contrainte  qui nécessiterait un changement de direction pour atteindre n.\
     En réduisant les successeurs aux successeurs naturels, Le JPS élague les noeuds qui contribuent moins dans la progression vers la destination.
  
-  - Successeurs forcés : Un noeud n est dit successeur forcé de x si : 
+  - Successeurs forcés : Un noeud n est dit successeur forcé de x si : \
           - n n'est pas un successeur naturel de x .
           - La contrainte imposée par un obstacle ou une limitation de l'environnement empêche l'algorithme d'ignorer ce noeud.
    
