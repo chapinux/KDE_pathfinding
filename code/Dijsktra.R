@@ -46,6 +46,9 @@ grid <- matrix(c(1, 1, 1, 0, 1,
 # Transformer la matrice en graphe
 graphe <- matrice_to_graphe(grid)
 
+
+
+
 ## Plot graphe : 
 ## Afficher le graphe dans la zone de tracé
 plot(graphe, 
@@ -54,6 +57,26 @@ plot(graphe,
      vertex.color = "skyblue",         # Couleur des nœuds
      edge.color = "gray",              # Couleur des arêtes
      main = "Graphe des Cases Marchables")  # Titre du graphe
+
+######
+# affichage comme la matrice 
+#####
+
+# on dispose sur une griille régulière 
+disposition <-  layout_on_grid(graphe)
+#on flippe les coordonnées en Y 
+disposition[,2] <- disposition[,2] %>% rev
+
+# affichage avec coordonnées fixées
+plot(graphe, 
+     layout=disposition,
+     vertex.label = 1:vcount(graphe),  # Afficher les indices des nœuds
+     vertex.size = 15,                 # Taille des nœuds
+     vertex.color = "skyblue",         # Couleur des nœuds
+     edge.color = "gray",              # Couleur des arêtes
+     main = "Graphe des Cases Marchables")  # Titre du graphe
+
+
 
 # Définir le point de départ et d'arrivée (transformés en indices de graphe)
 depart <- 1  # Coin supérieur gauche (indice 1)
@@ -69,6 +92,7 @@ temps_execution <- system.time({
 
 # Afficher le chemin trouvé (indices des nœuds)
 print(resultat$vpath[[1]])
+
 
 # Fonction pour reconvertir un index en coordonnées (i, j) dans la matrice
 index_to_coords <- function(index, ncol) {
@@ -98,3 +122,4 @@ cat("Distance totale parcourue :", distance_totale, "cm\n")
 
 # Afficher le temps d'exécution
 cat("Temps d'exécution de l'algorithme de Dijkstra :", temps_execution["elapsed"], "secondes\n")
+

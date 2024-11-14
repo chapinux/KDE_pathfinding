@@ -163,3 +163,4 @@ cat("Coût :", result$cost, "\n")
 
 # Affichage
 plot_grid(grid_rows, grid_cols, adjacency_list, start_node, goal_node, result$path, obstacles)
+

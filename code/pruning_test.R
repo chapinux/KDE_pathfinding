@@ -208,3 +208,4 @@ print("Voisins élagués :")
 for (n in pruned_neighbors) {
   print(n)
 }
+
