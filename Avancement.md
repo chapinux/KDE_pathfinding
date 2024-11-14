@@ -162,10 +162,11 @@ Uniforme signifie ici que l'algorithme traite chaque nœud en fonction du coût 
 
 ### 3. JPS : 
 L'algorithme Jump Point Search est une version améliorée de l'algorithme A\*, combinée à des règles d’élagage simples qui, appliquées de manière récursive, permettent d’identifier et d’éliminer de nombreuses symétries de chemins dans une grille non orientée connectée en 8 directions. 
+Le JPS est conçu surtout pour des grilles bidemnsionnelles à coût uniforme. \ 
 Il existe deux ensembles de règles dans cet algorithme : *les règles d’élagage et les règles de saut*.
     
   1. Règles d'élagage : Les règles d'élagage permettent de décider si un nœud voisin 𝑛doit être conservé pour l’étape suivante ou élagué.
-    Soient x : le noeud actuel , n  :le noeud suivant et p : le noeud précédent à x ( à partir duquel on 'est arrivé à x)
+    Soient x : le noeud actuel , n : le noeud suivant et p : le noeud précédent à x ( à partir duquel on 'est arrivé à x)
     Il y a deux grandes règles d'élagage: 
     
     - Règle 1 : Élagage des Chemins Plus Longs
@@ -174,19 +175,48 @@ Il existe deux ensembles de règles dans cet algorithme : *les règles d’élag
     - Règle 2 : Élagage des Chemins Sans Mouvement Diagonal Optimal
         But : Minimiser les déplacements en ligne droite lorsque des diagonales peuvent être utiles.
         Principe : Si un autre chemin permet d’atteindre n avec un déplacement en diagonale plus tôt ,au lieu de parcours horizontaux ou verticaux, alors il est préféré.
-        Exemple : si un chemin C2 = (p,y,n) a une longueur équivalente au chemin C1 = (p,x,n)  mais permet une diagonale plus tôt, alors il C1 sera élagué.
+        Exemple : si un chemin C2 = (p,y,n) a une longueur équivalente au chemin C1 = (p,x,n)  mais permet une diagonale plus tôt, alors C1 sera élagué.
         Cela assure une exploration plus directe des directions diagonales, souvent avantageuse dans les grilles.
 
 
-  2. Règles de saut : 
+  2. Règles de saut(Jumping Rules): JPS applique à chaque voisin forcé ou naturel du nœud actuel x une simple procédure récursive de « saut » , l'objectif est de remplacer chaque voisin n par un successeur alternatif n' situé plus loin.
+       Au lieu de se déplacer de noeud en noeud , l'algorithme JPS affecture des sauts en suivant une direction donnée jusqu'à atteindre une des 3 situations suivantes : 
+        - Un point de saut, où une décision de changement de direction est requise.
+        - Un obstacle 
+        - Le noeud de destination
+  
 - Concepts clés dans JSP :
-  - Élagage (Prunning) : 
-  - Saut (Jumping) :
-  - Successeurs naturels : 
-  - Successeurs forcés : 
-  - Successeurs 
+  - Points de saut (Jump Points): Un point de saut est un noeud important dans lequel il faut prendre une décision de direction ( soit à cause d'un obstacle , soit parcequ'il permet d'accéder à la direction optimale..). JPS identifie ces points de saust pour éviter les noeuds intermédiaires inutiles.
+  - Élagage des voisins(Neighbour Prunning) : JPS utilise des règles pour ignorer les noeuds voisins qui ne contribuent pas aux chemins les plus courts vers la destination.
+  - Successeurs naturels : pour un noeud x dont le parent est p(x) et n un voisin potentiel de x , Le noeud n est dit successeur naturel de x si : \
+          - La direction de déplacement de p(x) à x, puis de x à n reste la même.\
+          - Il n'y a pas d'obstacle ou de contrainte  qui nécessiterait un changement de direction pour atteindre n.\
+    En réduisant les successeurs aux successeurs naturels, Le JPS élague les noeuds qui contribuent moins dans la progression vers la destination.
+ 
+  - Successeurs forcés : Un noeud n est dit successeur forcé de x si : \
+          - n n'est pas un successeur naturel de x .\
+          - La contrainte imposée par un obstacle ou une limitation de l'environnement empêche l'algorithme d'ignorer ce noeud.
+   
+- Principe de fonctionnement:
+Dans A*, Chaque noeud est examiné individuellement, or le JPS identifie et n'explore que les points de saut( jump point).\
+Le fonctionnement de cet algorithme se résume en 5 étapes clés : \
+    1. Identification des points de saut :\
+    Pratiquement un noeud y est considéré comme point de saut s'il est atteint à partir d'un noeud x suivant un direction d lorseque l'une des conditions suivantes est remplie : \
+      * y est le noeud de destination .\
+      * y possède un voisin forcé dans une direction perpendiculaire à d.\
+      * Pour un mouvement diagonal, y possède un successeur dans une direction perpendiculaire.\
+      Mathématiquement : y = x + k \cdot \vec{d} ; où k un entier et y un point de saut.
+      
+    2. Élagage des voisins : A chaque noeud x , l'algorithme applique les règles d'élagage pour réduire le nombre de voisins à considérer. En ne gardant donc que les successeurs naturels et forcés.\
+    Pour un déplacement horizontal ou vertical :
 
+
+    3. Application du mécanisme de Saut :
+    4. Calcul des Coûts : 
+    5. Vérification de l'optimalité :
+    
 ### 4. A* bidirectionnel : 
 
 
+##  Pour lire la suite du rapport : https://www.overleaf.com/read/bcxzbmgwmjgz#01e321
 
