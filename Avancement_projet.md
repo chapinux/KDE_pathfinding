@@ -25,7 +25,5 @@ gantt
     section Phase 2: Implémentation initiale
     Implémentation de A* et Dijkstra :2024-10-23, 15d
     Début de l'implémentation de JPS :2024-11-06, 9d
-    
-    section Phase 3: Finalisation et optimisation
-    Implémentation avancée de JPS    :2024-11-15, 7d
-    Conversion du raster en graphe   :2024-11-15, 7d
+    Progrés pour l'implemnatation  de JPS    :2024-11-15, 7d
+    Code de Conversion du raster en graphe   :2024-11-15, 7d
