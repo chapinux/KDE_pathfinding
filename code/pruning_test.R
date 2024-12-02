@@ -4,7 +4,7 @@ grid_cols <- 3
 total_nodes <- grid_rows * grid_cols
 
 # Liste des obstacles (noeuds inaccessibles)
-obstacles <- c()  # Définir les obstacles ici, si nécessaire
+obstacles <- c(2)  # Définir les obstacles ici, si nécessaire
 
 # Fonction pour calculer la distance euclidienne
 euclidean_distance <- function(row1, col1, row2, col2) {
@@ -198,13 +198,47 @@ prune_neighbors <- function(p_x, x, neighbors, adjacency_list, grid_cols, grid_r
   return(left_neighbors)
 }
 
+is_forced_neighbor <- function(p_x, x, n, adjacency_list, grid_cols, grid_rows) {
+  
+  # Calcule la distance de p_x à n en évitant x
+  dist_p_x_n <- a_star(adjacency_list, euclidean_heuristic, p_x, n, grid_cols, grid_rows, avoid_node = x)$cost
+  # Distance de p_x à x
+  dist_p_x_x <- a_star(adjacency_list, euclidean_heuristic, p_x, x, grid_cols, grid_rows)$cost
+  # Calcule la distance entre x et n
+  dist_x_n <- a_star(adjacency_list, euclidean_heuristic, x, n, grid_cols, grid_rows, x)$cost
+
+    
+  if (dist_p_x_x + dist_x_n < dist_p_x_n) {
+    return(TRUE)
+  }
+  else {
+    return(FALSE)
+  }
+}
+
+
+jump <- function(x, direction, start, goal) {
+  n <- x + direction
+  # Ignore n qui est un obstacle et hors de la grille
+  if (n[1] >= 0 && n[1] < grid_rows &&
+      n[2] >= 0 && n[2] < grid_cols || 
+    !(neighbor_index %in% obstacles)) {
+      return(NULL)
+  }
+  if (n == goal) {
+    return(n) 
+  }
+}
+
 # Exemple d'appel de la fonction prune_neighbors
 neighbors_of_5 <- unlist(lapply(adjacency_list[[5]], function(x) x$node))  # Obtient les voisins du noeud 4
-pruned_neighbors <- prune_neighbors(4, 5, neighbors_of_5, adjacency_list, grid_cols, grid_rows)
-
+pruned_neighbors <- prune_neighbors(7, 5, neighbors_of_5, adjacency_list, grid_cols, grid_rows)
 print(neighbors_of_5)
+forced <- is_forced_neighbor(7, 5, 3, adjacency_list, grid_cols, grid_rows)
+print(forced)
+
 # Affiche les voisins élagués
-print("Voisins élagués :")
-for (n in pruned_neighbors) {
-  print(n)
-}
+#print("Voisins élagués :")
+#for (n in pruned_neighbors) {
+#  print(n)
+#}
