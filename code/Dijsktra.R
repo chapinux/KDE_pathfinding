@@ -98,3 +98,4 @@ cat("Distance totale parcourue :", distance_totale, "cm\n")
 
 # Afficher le temps d'exécution
 cat("Temps d'exécution de l'algorithme de Dijkstra :", temps_execution["elapsed"], "secondes\n")
+print(graphe)
