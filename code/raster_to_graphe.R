@@ -1,15 +1,15 @@
 library(raster)
 library(igraph)
+
 start_time <- Sys.time()
 # Code permet de récupérer les pixel de la zone marchable , de  stcoker les noeuds-voisins dans un dictionnaire ,puis de convertir ce dict en liste d'adjacence puis en graphe  
 
 r <- raster("./data/Raster_zone_marchable/Zone_marchable_raster.tif")
+nombre_pixels <- nrow(r) * ncol(r)
+print(paste( " Nombre de pixel :", nombre_pixels))
 marchable_value <- 31
 pixel_values <- values(r)
 indices_31 <- which(pixel_values == marchable_value)
-
-# Limiter aux 100 premiers indices marchables
-#indices_31 <- indices_31[1:min(100, length(indices_31))]
 
 
 # Création de la table de hachage des coordonnées
@@ -49,6 +49,7 @@ get_neighbors <- function(index, hash_coords, r) {
   return(unique(neighbors))  # Supprimer les doublons
 }
 
+
 # Créer une liste d'adjacence unique sans doublons
 adj_list <- vector("list", length(indices_31))
 names(adj_list) <- as.character(indices_31)
@@ -58,25 +59,63 @@ for (index in indices_31) {
   adj_list[[as.character(index)]] <- neighbors
 }
 
-# Création du graphe à partir de la liste d'adjacence sans arêtes redondantes
-g <- graph_from_adj_list(adj_list, mode = "out")
 
-#Affichage analytique du graphe ( test )
-cat("Affichage des nœuds et de leurs voisins :\n")
+# Construire le graphe par la méthode 1 : en créant une liste d'arêtes unique à partir de la liste d'adjacence , 
+edges <- c()
 for (node in names(adj_list)) {
   neighbors <- adj_list[[node]]
-  cat("Nœud", node, ": Voisins ->", paste(neighbors, collapse = ", "), "\n")
+  for (neighbor in neighbors) {
+    edges <- c(edges, node, neighbor)
+  }
 }
 
-## pour afficher la liste d'adjacence et le graphe 
-print(adj_list)
-print(g)
+# Créer le graphe non orienté
+g <- graph(edges = edges, directed = FALSE)
 
 
+# Construire le graphe par la méthode 2 : en utilisant la fonction   "graph_from_adj_list" , ( à revoir )
+#g <- graph_from_adj_list(adj_list, mode = "all")
+
+
+
+# exmple de test : 
+depart<- "7312"
+arrivee <- "7019"
+
+neighbors_list <- neighbors(g, v = depart, mode = "out")
+cat("Voisins du nœud", depart, ": ", neighbors_list, "\n")
+neighbors_list <- neighbors(g, v = arrivee, mode = "out")
+cat("Voisins du nœud", arrivee, ": ", neighbors_list, "\n")
+
+if (!is.na(depart) && !is.na(arrivee) && depart %in% V(g) && arrivee %in% V(g)) {
+  resultat <- shortest_paths(g, from = depart, to = arrivee)
+  print(resultat)
+} else {
+  cat("Les nœuds de départ ou d'arrivée ne sont pas valides dans le graphe.\n")
+}
+
+#print(adj_list)
+print(resultat)
 
 end_time <- Sys.time()  
 execution_time <- end_time - start_time  
 print(paste("Temps d'exécution total :", execution_time))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
