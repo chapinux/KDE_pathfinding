@@ -77,7 +77,6 @@ g <- graph(edges = edges, directed = FALSE)
 #g <- graph_from_adj_list(adj_list, mode = "all")
 
 
-
 # exmple de test : 
 depart<- "7312"
 arrivee <- "7019"
@@ -100,6 +99,7 @@ print(resultat)
 end_time <- Sys.time()  
 execution_time <- end_time - start_time  
 print(paste("Temps d'exécution total :", execution_time))
+
 
 
 
