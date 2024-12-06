@@ -1,73 +1,17 @@
-# Dimensions de la grille
-grid_rows <- 3
-grid_cols <- 3
-total_nodes <- grid_rows * grid_cols
+# Helper Functions for Pathfinding
 
-# Liste des obstacles (noeuds inaccessibles)
-obstacles <- c(2)  # Définir les obstacles ici, si nécessaire
-
-# Fonction pour calculer la distance euclidienne
+# Function to calculate Euclidean distance between two nodes
 euclidean_distance <- function(row1, col1, row2, col2) {
   return(sqrt((row1 - row2)^2 + (col1 - col2)^2))
 }
 
-# Fonction pour obtenir les coordonnées d’un noeud dans la grille
-get_coordinates <- function(node, grid_cols, grid_rows) {
-  validate_node(node, grid_cols, grid_rows)  # Vérifie l’index avant d’accéder aux coordonnées
-  row <- (node - 1) %/% grid_cols
-  col <- (node - 1) %% grid_cols
-  return(c(row, col))
+# Heuristique basée sur la distance euclidienne entre les positions de la grille
+euclidean_heuristic <- function(start, goal, grid_cols, grid_rows) {
+  start_coords <- get_coordinates(start, grid_cols, grid_rows)
+  goal_coords <- get_coordinates(goal, grid_cols, grid_rows)
+  return(euclidean_distance(start_coords[1], start_coords[2], goal_coords[1], goal_coords[2]))
 }
 
-# Vérifie que l’index du noeud est dans les limites de la grille
-validate_node <- function(node, grid_cols, grid_rows) {
-  total_nodes <- grid_cols * grid_rows
-  if (node < 1 || node > total_nodes) {
-    stop(paste("Index de noeud invalide :", node, "doit être entre 1 et", total_nodes))
-  }
-}
-
-# Construction de la liste d'adjacence pour la grille en prenant en compte les obstacles
-adjacency_list <- vector("list", total_nodes)
-for (node in 1:total_nodes) {
-  if (node %in% obstacles) {
-    adjacency_list[[node]] <- NULL  # Pas de voisins pour les noeuds obstacles
-    next
-  }
-  
-  node_coords <- get_coordinates(node, grid_cols, grid_rows)
-  neighbors <- list()
-  
-  # Directions pour les voisins avec le coût du déplacement
-  directions <- list(
-    list(dir = c(-1, 0), cost = 1),       # Haut
-    list(dir = c(1, 0), cost = 1),        # Bas
-    list(dir = c(0, -1), cost = 1),       # Gauche
-    list(dir = c(0, 1), cost = 1),        # Droite
-    list(dir = c(-1, 1), cost = sqrt(2)), # Diagonale haut-droite
-    list(dir = c(-1, -1), cost = sqrt(2)),# Diagonale haut-gauche
-    list(dir = c(1, -1), cost = sqrt(2)), # Diagonale bas-gauche
-    list(dir = c(1, 1), cost = sqrt(2))   # Diagonale bas-droite
-  )
-  
-  # Pour chaque direction, vérifie les voisins dans les limites de la grille
-  for (move in directions) {
-    dir <- move$dir
-    move_cost <- move$cost
-    neighbor_coords <- node_coords + dir
-    if (neighbor_coords[1] >= 0 && neighbor_coords[1] < grid_rows &&
-        neighbor_coords[2] >= 0 && neighbor_coords[2] < grid_cols) {
-      neighbor_index <- neighbor_coords[1] * grid_cols + neighbor_coords[2] + 1
-      # Ignore les voisins qui sont des obstacles
-      if (!(neighbor_index %in% obstacles)) {
-        neighbors[[length(neighbors) + 1]] <- list(node = neighbor_index, distance = move_cost)
-      }
-    }
-  }
-  adjacency_list[[node]] <- neighbors
-}
-
-# Algorithme A* pour la grille avec une heuristique euclidienne
 a_star <- function(graph, heuristic, start, goal, grid_cols, grid_rows, avoid_node = NULL) {
   validate_node(start, grid_cols, grid_rows)
   validate_node(goal, grid_cols, grid_rows)
@@ -125,14 +69,176 @@ a_star <- function(graph, heuristic, start, goal, grid_cols, grid_rows, avoid_no
   }
 }
 
-# Heuristique basée sur la distance euclidienne entre les positions de la grille
-euclidean_heuristic <- function(start, goal, grid_cols, grid_rows) {
-  start_coords <- get_coordinates(start, grid_cols, grid_rows)
-  goal_coords <- get_coordinates(goal, grid_cols, grid_rows)
-  return(euclidean_distance(start_coords[1], start_coords[2], goal_coords[1], goal_coords[2]))
+
+# Get coordinates of a node in a 2D grid
+get_coordinates <- function(node, grid_cols, grid_rows) {
+  validate_node(node, grid_cols, grid_rows)
+  row <- (node - 1) %/% grid_cols
+  col <- (node - 1) %% grid_cols
+  return(c(row, col))
 }
 
-# Fonction pour la visualisation de la grille avec obstacles, départ, but, et chemin
+# Get direction from node x to node n
+get_direction <- function(x, n, grid_cols, grid_rows) {
+  coords_x <- get_coordinates(x, grid_cols, grid_rows)
+  coords_n <- get_coordinates(n, grid_cols, grid_rows)
+  direction <- coords_n - coords_x
+  return(direction)
+}
+
+# Validate node index
+validate_node <- function(node, grid_cols, grid_rows) {
+  total_nodes <- grid_cols * grid_rows
+  if (node < 1 || node > total_nodes) {
+    return(NULL)
+  }
+}
+
+# Step function to move in a given direction
+step <- function(x, direction, grid_cols, grid_rows) {
+  n <- x + direction[1] * grid_cols + direction[2]
+  validate_node(n, grid_cols, grid_rows)
+  return(n)
+}
+
+# Function to prune unnecessary neighbors (based on JPS pruning rules)
+prune_neighbors <- function(p_x, x, neighbors, adjacency_list, grid_cols, grid_rows) {
+  pruned_neighbors <- list()
+  for (n in neighbors) {
+    if (n == x) next
+    dist_p_x_x <- a_star(adjacency_list, euclidean_heuristic, p_x, x, grid_cols, grid_rows)$cost
+    dist_x_n <- a_star(adjacency_list, euclidean_heuristic, x, n, grid_cols, grid_rows, avoid_node = x)$cost
+    dist_p_x_n <- a_star(adjacency_list, euclidean_heuristic, p_x, n, grid_cols, grid_rows, avoid_node = x)$cost
+    if (dist_p_x_n > dist_p_x_x + dist_x_n) {
+      pruned_neighbors <- append(pruned_neighbors, list(n))
+    }
+  }
+  return(pruned_neighbors)
+}
+
+# Function to identify forced neighbors (important for JPS)
+is_forced_neighbor <- function(p_x, x, n, adjacency_list, grid_cols, grid_rows) {
+  dist_p_x_n <- a_star(adjacency_list, euclidean_heuristic, p_x, n, grid_cols, grid_rows, avoid_node = x)$cost
+  dist_p_x_x <- a_star(adjacency_list, euclidean_heuristic, p_x, x, grid_cols, grid_rows)$cost
+  dist_x_n <- a_star(adjacency_list, euclidean_heuristic, x, n, grid_cols, grid_rows, avoid_node = x)$cost
+  return(dist_p_x_n > dist_p_x_x + dist_x_n)
+}
+
+
+
+# Recursive Jump function for JPS
+jump <- function(x, direction, grid_cols, grid_rows, goal, adjacency_list) {
+  cat("Jump called: x =", x, "direction =", direction, "\n")
+  n <- step(x, direction, grid_cols, grid_rows)
+  
+  if (is.null(n) || n %in% obstacles || n <= 0) {
+    cat("Jump terminated: Out of bounds or obstacle at n =", n, "\n")
+    return(NULL)
+  }
+  
+  # Check if goal is reached
+  if (n == goal) {
+    cat("Jump found goal at n =", n, "\n")
+    return(n)
+  }
+  
+  neighbors <- unlist(lapply(adjacency_list[[n]], function(neighbor) neighbor$node))
+  for (neighbor in neighbors) {
+    if (is_forced_neighbor(x, n, neighbor, adjacency_list, grid_cols, grid_rows)) {
+      cat("Jump found forced neighbor at n =", n, "\n")
+      return(n)
+    }
+  }
+  
+  # If moving diagonally, check orthogonal directions
+  if (abs(direction[1]) == 1 && abs(direction[2]) == 1) {
+    orthogonal1 <- jump(n, c(direction[1], 0), grid_cols, grid_rows, goal, adjacency_list)
+    orthogonal2 <- jump(n, c(0, direction[2]), grid_cols, grid_rows, goal, adjacency_list)
+    if (!is.null(orthogonal1) || !is.null(orthogonal2)) {
+      cat("Jump found diagonal forced neighbor at n =", n, "\n")
+      return(n)
+    }
+  }
+  
+  return(jump(n, direction, grid_cols, grid_rows, goal, adjacency_list))
+}
+
+# Identify successors using JPS
+identify_successors <- function(x, start, goal, adjacency_list, grid_cols, grid_rows) {
+  successors <- list()
+  neighbors_of_x <- unlist(lapply(adjacency_list[[x]], function(neighbor) neighbor$node))
+  neighbors <- prune_neighbors(start, x, neighbors_of_x, adjacency_list, grid_cols, grid_rows)
+  for (n in neighbors) {
+    direction <- get_direction(x, n, grid_cols, grid_rows)
+    jump_point <- jump(x, direction, grid_cols, grid_rows, goal, adjacency_list)
+    if (!is.null(jump_point)) {
+      successors <- append(successors, list(jump_point))
+    }
+  }
+  return(successors)
+}
+
+
+
+# A* Algorithm with JPS
+a_star_jps <- function(graph, heuristic, start, goal, grid_cols, grid_rows, obstacles = NULL) {
+  validate_node(start, grid_cols, grid_rows)
+  validate_node(goal, grid_cols, grid_rows)
+  
+  distances <- rep(Inf, length(graph))
+  distances[start] <- 0
+  priorities <- rep(Inf, length(graph))
+  priorities[start] <- heuristic(start, goal, grid_cols, grid_rows)
+  visited <- rep(FALSE, length(graph))
+  predecessors <- rep(NA, length(graph))
+  open_list <- list(start)
+  
+  while (length(open_list) > 0) {
+    # Get the node with the lowest priority
+    current <- open_list[[1]]
+    current_priority <- priorities[current]
+    for (node in open_list) {
+      if (priorities[node] < current_priority) {
+        current <- node
+        current_priority <- priorities[node]
+      }
+    }
+    open_list <- open_list[open_list != current]
+    
+    if (current == goal) {
+      path <- c()
+      while (!is.na(current)) {
+        path <- c(current, path)
+        current <- predecessors[current]
+      }
+      return(list(path = path, cost = distances[goal]))
+    }
+    print(current)
+    print(start)
+    
+    visited[current] <- TRUE
+    successors <- unlist(lapply(adjacency_list[[current]], function(neighbor) neighbor$node))
+    
+    for (successor in successors) {
+      if (visited[successor]) next
+      direction <- get_direction(current, successor, grid_cols, grid_rows)
+      move_cost <- sqrt(sum(direction^2))
+      tentative_distance <- distances[current] + move_cost
+      if (tentative_distance < distances[successor]) {
+        distances[successor] <- tentative_distance
+        priorities[successor] <- tentative_distance + heuristic(successor, goal, grid_cols, grid_rows)
+        predecessors[successor] <- current
+        if (!(successor %in% open_list)) {
+          open_list <- append(open_list, successor)
+        }
+      }
+    }
+  }
+  
+  return(list(path = NULL, cost = -1))
+}
+
+
 plot_grid <- function(grid_rows, grid_cols, adjacency_list, start, goal, path = NULL, obstacles = NULL) {
   plot(1, type = "n", xlim = c(0, grid_cols - 1), ylim = c(0, grid_rows - 1),
        xlab = "Colonne", ylab = "Ligne", main = "Représentation de la grille avec départ, but et obstacles",
@@ -165,80 +271,54 @@ plot_grid <- function(grid_rows, grid_cols, adjacency_list, start, goal, path = 
   }
 }
 
-# Fonction pour élaguer les voisins en appliquant des règles spécifiques
-prune_neighbors <- function(p_x, x, neighbors, adjacency_list, grid_cols, grid_rows) {
-  left_neighbors <- list()
+# Test the algorithm
+grid_rows <- 6
+grid_cols <- 6
+obstacles <- c(2, 4, 6, 9, 11, 30, 22, 25, 18, 17, 16, 28, 27)
+start <- 1
+goal <- 36
+
+# Generate adjacency list
+adjacency_list <- vector("list", grid_rows * grid_cols)
+for (node in 1:(grid_rows * grid_cols)) {
+  if (node %in% obstacles) {
+    adjacency_list[[node]] <- NULL
+    next
+  }
+  node_coords <- get_coordinates(node, grid_cols, grid_rows)
+  neighbors <- list()
   
-  for (n in neighbors) {
-    if (n == x) next
-    
-    # Calcule la distance de p_x à n en évitant x
-    dist_p_x_n <- a_star(adjacency_list, euclidean_heuristic, p_x, n, grid_cols, grid_rows, avoid_node = x)$cost
-    print(dist_p_x_n)
-    # Distance de p_x à x
-    dist_p_x_x <- a_star(adjacency_list, euclidean_heuristic, p_x, x, grid_cols, grid_rows)$cost
-    print(dist_p_x_x)
-    # Calcule la distance entre x et n
-    dist_x_n <- a_star(adjacency_list, euclidean_heuristic, x, n, grid_cols, grid_rows, x)$cost
-    print(dist_x_n)
-    
-    if (round(dist_p_x_x) == dist_p_x_x) {
-      # Condition pour mouvement droit
-      if (!(dist_p_x_n <= dist_p_x_x + dist_x_n)) {
-        left_neighbors <- append(left_neighbors, list(n))
-      }
-    } else {
-      # Condition pour mouvement diagonal
-      if (!(dist_p_x_n < dist_p_x_x + dist_x_n)) {
-        left_neighbors <- append(left_neighbors, list(n))
+  directions <- list(
+    list(dir = c(-1, 0), cost = 1),       # Up
+    list(dir = c(1, 0), cost = 1),        # Down
+    list(dir = c(0, -1), cost = 1),       # Left
+    list(dir = c(0, 1), cost = 1),        # Right
+    list(dir = c(-1, 1), cost = sqrt(2)), # Diagonal Up-Right
+    list(dir = c(-1, -1), cost = sqrt(2)),# Diagonal Up-Left
+    list(dir = c(1, -1), cost = sqrt(2)), # Diagonal Down-Left
+    list(dir = c(1, 1), cost = sqrt(2))   # Diagonal Down-Right
+  )
+  
+  for (move in directions) {
+    dir <- move$dir
+    move_cost <- move$cost
+    neighbor_coords <- node_coords + dir
+    if (neighbor_coords[1] >= 0 && neighbor_coords[1] < grid_rows &&
+        neighbor_coords[2] >= 0 && neighbor_coords[2] < grid_cols) {
+      neighbor_index <- neighbor_coords[1] * grid_cols + neighbor_coords[2] + 1
+      if (!(neighbor_index %in% obstacles)) {
+        neighbors[[length(neighbors) + 1]] <- list(node = neighbor_index, distance = move_cost)
       }
     }
   }
-  
-  return(left_neighbors)
+  adjacency_list[[node]] <- neighbors
 }
 
-is_forced_neighbor <- function(p_x, x, n, adjacency_list, grid_cols, grid_rows) {
-  
-  # Calcule la distance de p_x à n en évitant x
-  dist_p_x_n <- a_star(adjacency_list, euclidean_heuristic, p_x, n, grid_cols, grid_rows, avoid_node = x)$cost
-  # Distance de p_x à x
-  dist_p_x_x <- a_star(adjacency_list, euclidean_heuristic, p_x, x, grid_cols, grid_rows)$cost
-  # Calcule la distance entre x et n
-  dist_x_n <- a_star(adjacency_list, euclidean_heuristic, x, n, grid_cols, grid_rows, x)$cost
+# Run the A* with JPS algorithm
+result <- a_star_jps(adjacency_list, euclidean_heuristic, start, goal, grid_cols, grid_rows, obstacles)
+print(result$path)
+print(result$cost)
 
-    
-  if (dist_p_x_x + dist_x_n < dist_p_x_n) {
-    return(TRUE)
-  }
-  else {
-    return(FALSE)
-  }
-}
+# Plot the result
+plot_grid(grid_rows, grid_cols, adjacency_list, start, goal, result$path, obstacles)
 
-
-jump <- function(x, direction, start, goal) {
-  n <- x + direction
-  # Ignore n qui est un obstacle et hors de la grille
-  if (n[1] >= 0 && n[1] < grid_rows &&
-      n[2] >= 0 && n[2] < grid_cols || 
-    !(neighbor_index %in% obstacles)) {
-      return(NULL)
-  }
-  if (n == goal) {
-    return(n) 
-  }
-}
-
-# Exemple d'appel de la fonction prune_neighbors
-neighbors_of_5 <- unlist(lapply(adjacency_list[[5]], function(x) x$node))  # Obtient les voisins du noeud 4
-pruned_neighbors <- prune_neighbors(7, 5, neighbors_of_5, adjacency_list, grid_cols, grid_rows)
-print(neighbors_of_5)
-forced <- is_forced_neighbor(7, 5, 3, adjacency_list, grid_cols, grid_rows)
-print(forced)
-
-# Affiche les voisins élagués
-#print("Voisins élagués :")
-#for (n in pruned_neighbors) {
-#  print(n)
-#}
