@@ -161,7 +161,7 @@ Uniforme signifie ici que l'algorithme traite chaque nœud en fonction du coût 
 
 ### 3. JPS : 
 L'algorithme Jump Point Search est une version améliorée de l'algorithme A\*, combinée à des règles d’élagage simples qui, appliquées de manière récursive, permettent d’identifier et d’éliminer de nombreuses symétries de chemins dans une grille non orientée connectée en 8 directions. 
-Le JPS est conçu surtout pour des grilles bidemnsionnelles à coût uniforme. \ 
+Le JPS est conçu surtout pour des grilles bidimensionnelles à coût uniforme. \ 
 Il existe deux ensembles de règles dans cet algorithme : *les règles d’élagage et les règles de saut*.
     
   1. Règles d'élagage : Les règles d'élagage permettent de décider si un nœud voisin 𝑛doit être conservé pour l’étape suivante ou élagué.
