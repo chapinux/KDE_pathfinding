@@ -47,8 +47,8 @@ Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et l
 #### Tableau de critères :
 | Critères     | A*  | Dijkstra       |JPS       |
 |---------|------|-------------|-------------|
-| Adaptation aux grilles 2D   | Trés bien adapté   | Bien Adapté       | Optimisé pour les grilles, trés bien adapté pour les grilles continues |
-| Coût et Performance (temps)     | Optimal : utilise une heuristique   | Optimal mais plus lent        | Optimal et trés rapide   |
+| Adaptation aux grilles 2D   | Très bien adapté   | Bien Adapté       | Optimisé pour les grilles, très bien adapté pour les grilles continues |
+| Coût et Performance (temps)     | Optimal : utilise une heuristique   | Optimal mais plus lent        | Optimal et très rapide   |
 | Utilisation d'heuristique    | oui  | non      | oui et avec optimisation  |
 | Gestion des obstacles   | oui, efficace | oui mais exploration exhaustive      | oui, optimisation sur les obstacles  |
 | Capacité à trouver le chemin optimal    | Toujours si l'heuristique est correcte  | Toujours      | Toujours |
