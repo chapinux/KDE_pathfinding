@@ -1,5 +1,4 @@
-# ESTIMATION DE LA DENSITÉ 2D PAR NOYAU DANS L’ESPACE URBAIN
- PIÉTON
+# ESTIMATION DE LA DENSITÉ 2D PAR NOYAU DANS L’ESPACE URBAIN PIÉTON
  
 ## 1. Etat de l’art sur le pathfinding 2D
 Le pathfinding en 2D (ou recherche de chemin en 2D) est un problème d'intelligence artificielle consistant à déterminer le chemin le plus court ou le plus efficace entre deux points dans un environnement bidimensionnel, tel qu’un jeu, une simulation, ou un système d’information géographique. Un tel algorithme de recherche de chemin vise à trouver un itinéraire qui évite les obstacles, minimise la distance ou le temps, et satisfait des contraintes spécifiques.
