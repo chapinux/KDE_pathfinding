@@ -1,5 +1,30 @@
-# ESTIMATION DE LA DENSITÉ 2D PAR NOYAU DANS L’ESPACE URBAIN
- PIÉTON
+Mise à jour du fichier Avancement_projet.md : vue globale sur l'avancements 
+
+## Vue globale sur l'avancement du projet
+  
+### 2 octobre 2024: 
+- Explication du sujet, compréhension du travail demandé et de la problématique associée.
+- Recherche bibliographique sur le sujet : Pathfinding 2D.
+- Identification et choix des algorithmes de pathfinding 2D les plus adaptés et efficaces pour notre projet : A*, JPS, Dijkstra.
+### 23 octobre 2024 : 
+- Recherche bibliographique approfondie sur les deux algorithmes : A* et Dijkstra.
+- Implémentation du code basique de ces deux algorithmes.
+### 6 novembre 2024 : 
+- Recherche bibliographique sur l'algorithme JPS.
+- Compréhension approfondie de cet algorithme.
+- Début de son implémentation.
+### 15 novembre 2024 : 
+- Progrès dans l'implémentation de l'algorithme JPS.
+- Développement d'un code pour convertir le raster de notre zone marchable en graphe, en éliminant les pixels correspondant aux zones non marchables.
+
+### 11 Décembre 2024 : 
+- Implémentation des 3 algorithmes JPS, A* , Dijkstra
+- Premiers tests de Dijkstra et A* appliqués au Raster de la zone marchable.
+
+
+
+
+# ESTIMATION DE LA DENSITÉ 2D PAR NOYAU DANS L’ESPACE URBAIN PIÉTON
  
 ## 1. Etat de l’art sur le pathfinding 2D
 Le pathfinding en 2D (ou recherche de chemin en 2D) est un problème d'intelligence artificielle consistant à déterminer le chemin le plus court ou le plus efficace entre deux points dans un environnement bidimensionnel, tel qu’un jeu, une simulation, ou un système d’information géographique. Un tel algorithme de recherche de chemin vise à trouver un itinéraire qui évite les obstacles, minimise la distance ou le temps, et satisfait des contraintes spécifiques.
@@ -19,8 +44,12 @@ Dans le contexte du pathfinding 2D ,et dans certains algorithmes, les heuristiqu
 
 ### c. Défis et limitations :
 * La complexité de l’environnement : Les environnements avec des obstacles irréguliers ou en mouvement rendent le calcul du chemin difficile, l’algorithme doit recalculer ou ajuster le chemin en temps réel.
-* Coût de Calcul elevé pour les environnement étendus : Sur des environnememnt étendues, les problèmes de pathfinding devient plus exigeant en ressources, augmentant le temps de calcul et l’utilisation de la mémoire. Dans ce cas, des optimisations (comme des heuristiques efficaces) seront nécessaires pour garder des temps de réponse raisonnables. 
+* Coût de calcul elevé pour les environnement étendus : Les problèmes de pathfinding deviennent plus exigeants en ressources, augmentant le temps de calcul et l’utilisation de la mémoire. Dans ce cas, des optimisations (comme des heuristiques efficaces) seront nécessaires pour garder des temps de réponse raisonnables. 
 * Limites des algorithmes heuristiques:  les heuristiques ne sont pas toujours adaptées aux environnements complexes ou non structurés. Elles peuvent ignorer des chemins valables ou se focaliser excessivement sur des itinéraires locaux, sans explorer d’autres options potentielles.D'ou la nécessité de trouver un compromis entre efficacité et précision.
+
+  **Définition d'une heuristique** :
+* Wikipédia : L'heuristique  (du grec ancien εὑρίσκω, heuriskô, « je trouve ») est « l'art d'inventer, de faire des découvertes2 » en résolvant des problèmes à partir de connaissances incomplètes. Ce type d'analyse permet d'aboutir en un temps limité à des solutions acceptables.
+* Cambridge dictionary : arriving at a solution by trying different actions to see if they produce the result that is wanted, rather than using strict rules.
 
 ### Ressources bibliographiques
 1. [Planning as heuristic search Blai Bonet ∗, Héctor Geffner](https://pdf.sciencedirectassets.com/271585/1-s2.0-S0004370200X0077X/1-s2.0-S0004370201001084/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEgaCXVzLWVhc3QtMSJIMEYCIQDy4E4uEtroJsB4pUhSj5loIrIhP19pF0JdotiwNOpvHgIhAK%2BTcTgYR4BJPMBHCITlVCfvqQJnEyNmko1dN6GJoW6kKrwFCLD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQBRoMMDU5MDAzNTQ2ODY1Igzx1vhyXFBpQsfQiWcqkAX56QE%2Fny%2F78Wo242Wgi1FsXmRlU%2BfFJDANAMF5VzJAnIpEhIYFJFhK2H18DsJ76VxIevkUQ7qNeV93xGo0nySxh3Zb0uY3LAjefop4rutgmbvzC9l3zUGWGugSIIMo9oNnzjgxPCTRGG2jVxf6bQwGCWKoERvoB4aY3inwOjloFu%2Ft0EPDLxGtTkBI756zBYgs%2Fry690MQX7aBcnZhjvDr%2Bqa1J6ZsJ4gphXUHBGQ9a7iIjlcMT62PdOVb7najkLBnlrX2x47wurjxaJVJf%2Blj4ilw5v8Fg3LTRRLzKLmn%2FTaY2uF7CO%2BaYXUPE8fGBXNGN1OUnvoOSh6MEwXs1G0sV52h9uKkRbwEwmrfdpjUIG4cgxJOIQUXhivYqAD3lbWQSSinjw7ZLTz0sjl8%2BHuALMCRayr8V7MZlrLwnP3YPZldiiUtsijaIs384nOj4L6b%2FGo293yM3OcZuWY8IMBq7UjA%2FIm7%2Fzsrgv94aVOePcpl3dLYuiAVWAWl9jB3Th47k%2B88%2FVNUE51DHP6qBN%2FOB%2F4d22Tb9D7Tvkm%2BUfI1TkwyqFwOBckbdNbuAdMzAkhFV%2BCZZy22lfkWRdtziKq4vR4Tk2GKjxM4l9GuyIxFDSN0W81pkDRo%2BqIRKxJBUeljH8i2bJqJpq9VcEtqZRnjGQOjwnPAHpU4dVHCvkmALEuGx8kC5h5g27OmxRRJY61IFEBog%2BdysSoMOUyyprJrQmVQVsM4VweHuqiQ1fVoJM60imF%2Bfvmf5i6tpNDrckQdeej%2FcjXRTKNNPUJotl7iMhTuu1v2qbHXcwzm1QxQEA%2BzeB7S3fQP9fguhzKNwVE3bhBC86QQ7YpuuI73yB4H5GK19T%2BVwPFpzAcEYsOlfTCF3%2BC4BjqwAZXmyHevAAyJXZ75j4CSDak7pPiGWs1jelunObrHdoSC1Jdjf2nNGrKtVXMHg3gmVYI5apEBnqQ02xJ37aAiptIa8VIbBGWTUY2JLReOeXeKOPl0mlsspJ%2BQ0ItLu8H1IetxUQNWYBVDXnNiPgHGpPE3HWC4OB2vCGIXmRhPSTXY7P6UDXd4GZuysQbtaPGW75BDq%2BsFgqbTC1Swj0aCzocLmboY55HzmRTFXJmRNey6&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241022T234113Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYRKPKQWBY%2F20241022%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9bc9fa07a2a8de7a46d0f02a3af279138414c0f9122662447cb849ab820df919&hash=a8ad86df766c61a9b40b851b6473ebd37a3408332e5f7e3e940557af5f08ee44&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S0004370201001084&tid=spdf-f9ca8a14-cc41-4c54-96d3-292d9f6de8c2&sid=841a6b079377204b128bb1711bb48209f5b8gxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=00105f02590355525056&rr=8d6d564029ff9e55&cc=fr)
@@ -42,32 +71,32 @@ Dans le contexte du pathfinding 2D ,et dans certains algorithmes, les heuristiqu
 - *Johnson’s Algorithm*
 - *Bi-directional A-Star*
 - *Jump Point Search (JPS)*
-Cette liste n'est pas exhaustive , mais ce sont les algorithmes de pathifinding les plus efficaces et les plus utilisées.
+Cette liste n'est pas exhaustive , mais ce sont les algorithmes de pathifinding les plus efficaces et les plus utilisés.
 ### Critères de sélection: 
-Le choix de 3 algorithmes adéquats pour notre sujet, pour les impélemnter et les tester ensuite sur les données du projet pour pouvoir évaluer leur performance et précision, est fait sur la base de plusieurs cirtères : 
+Le choix de 3 algorithmes adéquats pour notre sujet, pour les implémenter et les tester ensuite sur les données du projet pour pouvoir évaluer leur performance et précision, est fait sur la base de plusieurs cirtères : 
 #### Tableau de critères :
 | Critères     | A*  | Dijkstra       |JPS       |
 |---------|------|-------------|-------------|
-| Adaptation aux grilles 2D   | Trés bien adapté   | Bien Adapté       | Optimisé pour les grilles, trés bien adapté pour les grilles continues |
+| Adaptation aux grilles 2D   | Très bien adapté   | Bien Adapté       | Optimisé pour les grilles, trés bien adapté pour les grilles continues |
 | Coût et Performance (temps)     | Optimal : utilise une heuristique   | Optimal mais plus lent        | Optimal et trés rapide   |
 | Utilisation d'heuristique    | oui  | non      | oui et avec optimisation  |
 | Gestion des obstacles   | oui, efficace | oui mais exploration exhaustive      | oui, optimisation sur les obstacles  |
 | Capacité à trouver le chemin optimal    | Toujours si l'heuristique est correcte  | Toujours      | Toujours |
 
 ---
-Les autres algorithmes ne sont pas adaptés pour des problèmes de pathfindig sur des grilles 2D, ils sont adaptés plus pour des graphes pondérés.
+Les autres algorithmes ne sont pas adaptés pour des problèmes de pathfinding sur des grilles 2D, ils sont adaptés plus pour des graphes pondérés.
 
 
 
 ### Les 3 algorithmes choisis :
 #### Dijkstra :
 - Principe : Explore  tous les chemins en calculant le coût le plus bas depuis un point de départ jusqu'à chaque autre nœud.
-- Avantages : 1. le Dijkstra trouve toujours le chemin le plus court mais il ne dépend pas d'une heuristique ce qui le rend plus lent que A* dans les grands grilles.
+- Avantages : 1. Dijkstra trouve toujours le chemin le plus court mais il ne dépend pas d'une heuristique ce qui le rend plus lent que A* dans les grandes grilles.
               2. Disponible dans le package igraph pour des graphes pondérés, il peut être utilisé pour des grilles raster converties en graphe.
 #### A (A-star Algorithm)* / A* Bidirectionnel : 
 - Principe : le A* utilise une fonction heuristique pour explorer les chemins les plus prometteurs en utilisant une combinaison du  coût réel ( noté souvent g(n) ) et une estimation de la distance restante par une heuristique ( noté souvent h(n)).
 - Avantages : Trouve le chemin optimal, rapide grâce à l'heuristique, particulièrement adapté pour les grilles 2D et très efficace dans les environnements avec des obstacles.
-- Le A* bidirectionel : C'est une variante de A* qui lance une recherche simultanément depuis le départ et l'arrivée, il permet dedonc de réduire la zone à explorer.Il est plus rapide que A*, car les deux recherches se rencontrent au milieu du chemin.
+- Le A* bidirectionel : C'est une variante de A* qui lance une recherche simultanément depuis le départ et l'arrivée, il permet donc de réduire la zone à explorer.Il est plus rapide que A*, car les deux recherches se rencontrent au milieu du chemin.
 #### Jump Point Search (JPS) : 
 - Principe : Le JPS est une optimisation de A* pour les grilles 2D, il consiste à sauter les nœuds inutiles sur les lignes droites ( ex : zone marchable continue dans la direction voulue) et se concentre uniquement sur les points de décision critiques ( Apparition d'un obstacle).
 - Avantages : 1. Plus rapide que A* sur les grilles, surtout si la grille est grande et contient de nombreux chemins linéaires sans obstacles.
