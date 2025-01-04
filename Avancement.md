@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Mise à jour du fichier Avancement_projet.md : vue globale sur l'avancements 
 
 ## Vue globale sur l'avancement du projet
@@ -24,6 +25,8 @@ Mise à jour du fichier Avancement_projet.md : vue globale sur l'avancements
 
 
 
+=======
+>>>>>>> 56d47b90ce7617f1d784fa3f55a2f2e1cb62897f
 # ESTIMATION DE LA DENSITÉ 2D PAR NOYAU DANS L’ESPACE URBAIN PIÉTON
  
 ## 1. Etat de l’art sur le pathfinding 2D
@@ -44,8 +47,13 @@ Dans le contexte du pathfinding 2D ,et dans certains algorithmes, les heuristiqu
 
 ### c. Défis et limitations :
 * La complexité de l’environnement : Les environnements avec des obstacles irréguliers ou en mouvement rendent le calcul du chemin difficile, l’algorithme doit recalculer ou ajuster le chemin en temps réel.
+<<<<<<< HEAD
 * Coût de calcul elevé pour les environnement étendus : Les problèmes de pathfinding deviennent plus exigeants en ressources, augmentant le temps de calcul et l’utilisation de la mémoire. Dans ce cas, des optimisations (comme des heuristiques efficaces) seront nécessaires pour garder des temps de réponse raisonnables. 
 * Limites des algorithmes heuristiques:  les heuristiques ne sont pas toujours adaptées aux environnements complexes ou non structurés. Elles peuvent ignorer des chemins valables ou se focaliser excessivement sur des itinéraires locaux, sans explorer d’autres options potentielles.D'ou la nécessité de trouver un compromis entre efficacité et précision.
+=======
+* Coût de Calcul elevé pour les environnement étendus : Sur des environnememnt étendues, les problèmes de pathfinding devient plus exigeant en ressources, augmentant le temps de calcul et l’utilisation de la mémoire. Dans ce cas, des optimisations (comme des heuristiques efficaces) seront nécessaires pour garder des temps de réponse raisonnables. 
+* Limites des algorithmes heuristiques:  les heuristiques ne sont pas toujours adaptées aux environnements complexes ou non structurés. Elles peuvent ignorer des chemins valables ou se focaliser excessivement sur des itinéraires locaux, sans explorer d’autres options potentielles. D'ou la nécessité de trouver un compromis entre efficacité et précision.
+>>>>>>> 56d47b90ce7617f1d784fa3f55a2f2e1cb62897f
 
   **Définition d'une heuristique** :
 * Wikipédia : L'heuristique  (du grec ancien εὑρίσκω, heuriskô, « je trouve ») est « l'art d'inventer, de faire des découvertes2 » en résolvant des problèmes à partir de connaissances incomplètes. Ce type d'analyse permet d'aboutir en un temps limité à des solutions acceptables.
@@ -77,8 +85,13 @@ Le choix de 3 algorithmes adéquats pour notre sujet, pour les implémenter et l
 #### Tableau de critères :
 | Critères     | A*  | Dijkstra       |JPS       |
 |---------|------|-------------|-------------|
+<<<<<<< HEAD
 | Adaptation aux grilles 2D   | Très bien adapté   | Bien Adapté       | Optimisé pour les grilles, trés bien adapté pour les grilles continues |
 | Coût et Performance (temps)     | Optimal : utilise une heuristique   | Optimal mais plus lent        | Optimal et trés rapide   |
+=======
+| Adaptation aux grilles 2D   | Très bien adapté   | Bien Adapté       | Optimisé pour les grilles, très bien adapté pour les grilles continues |
+| Coût et Performance (temps)     | Optimal : utilise une heuristique   | Optimal mais plus lent        | Optimal et très rapide   |
+>>>>>>> 56d47b90ce7617f1d784fa3f55a2f2e1cb62897f
 | Utilisation d'heuristique    | oui  | non      | oui et avec optimisation  |
 | Gestion des obstacles   | oui, efficace | oui mais exploration exhaustive      | oui, optimisation sur les obstacles  |
 | Capacité à trouver le chemin optimal    | Toujours si l'heuristique est correcte  | Toujours      | Toujours |
@@ -191,7 +204,7 @@ Uniforme signifie ici que l'algorithme traite chaque nœud en fonction du coût 
 
 ### 3. JPS : 
 L'algorithme Jump Point Search est une version améliorée de l'algorithme A\*, combinée à des règles d’élagage simples qui, appliquées de manière récursive, permettent d’identifier et d’éliminer de nombreuses symétries de chemins dans une grille non orientée connectée en 8 directions. 
-Le JPS est conçu surtout pour des grilles bidemnsionnelles à coût uniforme. \ 
+Le JPS est conçu surtout pour des grilles bidimensionnelles à coût uniforme. \ 
 Il existe deux ensembles de règles dans cet algorithme : *les règles d’élagage et les règles de saut*.
     
   1. Règles d'élagage : Les règles d'élagage permettent de décider si un nœud voisin 𝑛doit être conservé pour l’étape suivante ou élagué.
