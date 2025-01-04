@@ -1,5 +1,5 @@
 # Helper Functions for Pathfinding
-
+start_time <- Sys.time()
 # Function to calculate Euclidean distance between two nodes
 euclidean_distance <- function(row1, col1, row2, col2) {
   return(sqrt((row1 - row2)^2 + (col1 - col2)^2))
@@ -54,7 +54,6 @@ a_star <- function(graph, heuristic, start, goal, grid_cols, grid_rows, avoid_no
       neighbor_distance <- neighbor$distance
       
       # Ignore le `avoid_node` s'il est défini
-      if (!is.null(avoid_node) && neighbor_node == avoid_node) next
       
       if (visited[neighbor_node] == FALSE) {
         new_distance <- distances[current_node] + neighbor_distance
@@ -315,10 +314,17 @@ for (node in 1:(grid_rows * grid_cols)) {
 }
 
 # Run the A* with JPS algorithm
-result <- a_star_jps(adjacency_list, euclidean_heuristic, start, goal, grid_cols, grid_rows, obstacles)
+result <- a_star(adjacency_list, euclidean_heuristic, start, goal, grid_cols, grid_rows, obstacles)
 print(result$path)
 print(result$cost)
 
 # Plot the result
 plot_grid(grid_rows, grid_cols, adjacency_list, start, goal, result$path, obstacles)
+
+end_time <- Sys.time()
+execution_time <- end_time - start_time  
+print(paste("Temps d'exécution total :", execution_time))
+
+
+
 
