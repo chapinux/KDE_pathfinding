@@ -21,8 +21,13 @@ Mise à jour du fichier Avancement_projet.md : vue globale sur l'avancements
 ### 11 Décembre 2024 : 
 - Implémentation des 3 algorithmes JPS, A* , Dijkstra
 - Premiers tests de Dijkstra et A* appliqués au Raster de la zone marchable.
+### 19 Décembre 2024
+- Amélioration du raster de la zone marchable
+- Benchmark des algorithmes
 
-
+### 5, 6, 7 Janvier 2025
+- Changement du graphe utilisé par Dijkstra
+- Rédaction des rapports et du support présentation
 
 
 =======
